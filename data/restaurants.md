@@ -1,0 +1,4 @@
+# Restaurants
+
+| Name          | Location                                  | rate | public_rate | tags | reviews                                                                                                                                                                                                                                                    |
+| Taste of Thai | 3629 West Broadway, Vancouver, BC V6R 2B8 |      | 4.7         | Thai | {"reviewer": "Yayu", "food": "Pad Gra Paow + Rice & Fried Egg", "score": 80, "comment": "有点辣但还可以"} <br> {"reviewer": "Jinyuan", "food": "Pad Gra Paow + Rice & Fried Egg (exxxxxxxxxxtra spicy)", "score": 85, "comment": "加辣之后是我吃过最辣的"} |
