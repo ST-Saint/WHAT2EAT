@@ -1,0 +1,104 @@
+{
+    "columns": [
+        "restaurant",
+        "reviewer",
+        "dish",
+        "score",
+        "comment",
+        "date"
+    ],
+    "index": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+    ],
+    "data": [
+        [
+            "Taste of Thai",
+            "wyy",
+            "Pad Gra Paow + Rice & Fried Egg",
+            80,
+            "有点辣但还可以",
+            "2023-06-05 Mon"
+        ],
+        [
+            "Taste of Thai",
+            "7hr",
+            "Pad Gra Paow + Rice & Fried Egg (exxxxxxxxxxtra spicy)",
+            85,
+            "加辣之后是我吃过最辣的",
+            "2023-06-05 Mon"
+        ],
+        [
+            "Taste of Thai",
+            "wyy",
+            "Beef Oyster Sauce",
+            65,
+            "甜酱油牛肉, 味道还行8, 但是不带饭",
+            "2023-06-05 Mon"
+        ],
+        [
+            "Taste of Thai",
+            "soup",
+            "Samui Island",
+            70,
+            "冷了变成固体了不好吃",
+            "2023-06-05 Mon"
+        ],
+        [
+            "Mamalee Malaysian",
+            "wyy",
+            "Scipy Pan Mee",
+            70,
+            "面, 蛋, 肉, 辣椒都很好, 但是小鱼干不是很喜欢",
+            "2023-06-06 Tue"
+        ],
+        [
+            "Mamalee Malaysian",
+            "7hr",
+            "Scipy Pan Mee",
+            70,
+            "吃起来像加了很多料的炒河粉",
+            "2023-06-06 Tue"
+        ],
+        [
+            "Mamalee Malaysian",
+            "soup",
+            "(Lrg)Hainanese Chicken Rice 加大海南雞飯一碟",
+            90,
+            "好吃, 温哥华最好吃的海南鸡饭",
+            "2023-06-06 Tue"
+        ],
+        [
+            "Bombay Masala Indian Restaurant",
+            "s00y33",
+            "Daal Tarka + Garlic Naan",
+            100,
+            "好吃(biased)",
+            "2023-06-07 Wed"
+        ],
+        [
+            "Bombay Masala Indian Restaurant",
+            "7hr",
+            "Lamb Biryani",
+            80,
+            "中等一般",
+            "2023-06-07 Wed"
+        ],
+        [
+            "Bombay Masala Indian Restaurant",
+            "wyy",
+            "Chicken Curry + Garlic Naan",
+            70,
+            "有ginger余味有点苦",
+            "2023-06-07 Wed"
+        ]
+    ]
+}
