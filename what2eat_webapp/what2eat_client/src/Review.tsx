@@ -68,7 +68,7 @@ const Review = () => {
         {...register("restaurant", { required: true })}
       />
       <label>dish</label>
-      <input placeholder="dish" {...register("dish", { required: true })} />
+      <input placeholder="dish" {...register("dish")} />
       <label>score</label>
       <input
         placeholder="score"
@@ -83,7 +83,7 @@ const Review = () => {
       <label>comment</label>
       <input
         placeholder="comment"
-        {...register("comment", { required: true })}
+        {...register("comment")}
       />
 
       {errors.reviewer && <p>This field is required</p>}
