@@ -49,3 +49,6 @@
 | 45 | 耕食记                                    | wyy        | 松花蛋擂茄子 Century Eggs with Eggplant                                                  |      50 | 没有擂持, 没有辣椒, 皮蛋也很少               | 2023-06-12T05:45:59.084Z |
 | 46 | 耕食记                                    | 7hr        |                                                                                          |      75 | 吃起来像广东人做的湘菜                       | 2023-06-12T05:53:29.131Z |
 | 47 | 耕食记                                    | s00        | 砂锅原味鸡 Original Chinese Chicken (Signature dish)                                     |      70 | 鸡好柴                                       | 2023-06-12T06:18:18.988Z |
+| 48 | Corner 23 安可盧 萬巒豬腳                 | 7hr        | 蛋餅Egg Pancake                                                                          |      85 | 还okay                                       | 2023-06-13T04:51:25.610Z |
+| 49 | Corner 23 安可盧 萬巒豬腳                 | soup       | 萬巒豬腳麵線 Wan Luan Pork Hock Vermicelli                                               |      90 | 猪脚有点肥                                   | 2023-06-13T04:52:44.368Z |
+| 50 | Corner 23 安可盧 萬巒豬腳                 | wyy        | Taiwan Style Fried Rice Noodle 台式炒米粉                                                |      85 | 有点淡没啥辣味但是还可以                     | 2023-06-13T04:54:43.142Z |
