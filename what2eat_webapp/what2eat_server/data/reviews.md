@@ -52,3 +52,4 @@
 | 48 | Corner 23 安可盧 萬巒豬腳                 | 7hr        | 蛋餅Egg Pancake                                                                          |      85 | 还okay                                       | 2023-06-13T04:51:25.610Z |
 | 49 | Corner 23 安可盧 萬巒豬腳                 | soup       | 萬巒豬腳麵線 Wan Luan Pork Hock Vermicelli                                               |      90 | 猪脚有点肥                                   | 2023-06-13T04:52:44.368Z |
 | 50 | Corner 23 安可盧 萬巒豬腳                 | wyy        | Taiwan Style Fried Rice Noodle 台式炒米粉                                                |      85 | 有点淡没啥辣味但是还可以                     | 2023-06-13T04:54:43.142Z |
+| 51 | Gallery Patio & Lounge                    | wyy        | Butter Chicken                                                                           |      82 | naan和酱汁好吃, 味道比较甜                   | 2023-06-14T06:05:04.786Z |
