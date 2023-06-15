@@ -1,4 +1,3 @@
-import './review.scss';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
