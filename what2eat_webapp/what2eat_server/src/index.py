@@ -12,6 +12,7 @@ class Review:
     comment:str
     date: datetime.date
 
+# TODO(return table data): add new @method and response json data
 
 @method
 def add_review(review: Review) -> Result:

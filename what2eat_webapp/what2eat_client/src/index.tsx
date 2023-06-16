@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Review from './Review';
+import ReviewEditor from './ReviewEditor';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Example from './example';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -18,13 +17,10 @@ const router = createBrowserRouter([
         element: <App />,
     },
     {
-        path: 'review',
-        element: <Review />,
-    },
-    {
-        path: 'example',
-        element: <Example />,
-    },
+        path: '/revieweditor',
+        element: <ReviewEditor />,
+    }
+    // TODO(display table): add new router
 ]);
 
 const root = ReactDOM.createRoot(
