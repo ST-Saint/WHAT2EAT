@@ -1,0 +1,17 @@
+POST http://localhost:8080
+Content-Type: application/json
+{
+    "jsonrpc": "2.0",
+    "method": "add_review",
+    "params": {
+              "review": {
+                         "reviewer": "wyy",
+                         "restaurant": "DD",
+                         "score": 80,
+                         "comment": "ummm",
+                         "dish": "ah?",
+                         "date": "2023-06-08 Thu"
+                         }
+              },
+    "id": 1
+}
