@@ -47,9 +47,9 @@ const ReviewEditor = () => {
         console.log(review);
         let response;
         try {
-            response = await fetch('http://localhost:8080', {
+            response = await fetch('http://localhost:5000', {
                 method: 'POST',
-                mode: 'no-cors',
+                mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             });
@@ -57,7 +57,9 @@ const ReviewEditor = () => {
                 /* Handle */
             }
             console.log(response.body);
-        } catch (error) {}
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     return (
