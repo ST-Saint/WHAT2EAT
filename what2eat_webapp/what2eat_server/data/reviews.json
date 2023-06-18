@@ -66,7 +66,15 @@
         55,
         56,
         57,
-        58
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66
     ],
     "data": [
         [
@@ -518,6 +526,38 @@
             "2023-06-15T03:43:31.774Z"
         ],
         [
+            "JOHN 3:16 Malaysian Delights Vancouver",
+            "wyy",
+            "Char Koay Teow",
+            87,
+            "炒鸡蛋好吃, 要是有点别的什么肉就更好了",
+            "2023-06-16T04:01:06.606Z"
+        ],
+        [
+            "JOHN 3:16 Malaysian Delights Vancouver",
+            "7hr",
+            "Char Koay Teow",
+            80,
+            "没啥特别的",
+            "2023-06-16T04:02:16.882Z"
+        ],
+        [
+            "JOHN 3:16 Malaysian Delights Vancouver",
+            "soup",
+            "Nasi Goreng Ayam",
+            82,
+            "鸡排比饭好吃很多",
+            "2023-06-16T04:02:57.119Z"
+        ],
+        [
+            "JOHN 3:16 Malaysian Delights Vancouver",
+            "7hr",
+            "Roti Canai",
+            82,
+            "7hr: 味道很像蛋挞挞皮; soup: 确实很像挞皮, 没有很筋道; wyy: 没有很甜",
+            "2023-06-16T04:06:24.171Z"
+        ],
+        [
             "Me and Crepe 国子煎 (ubc)",
             "wyy",
             "Peking Duck 北京烤鸭 (Little Spicy 小辣) (With Egg & Lettuce 配鸡蛋和生菜)",
@@ -537,9 +577,41 @@
             "Bird N’ Hand (Broadway)",
             "wyy",
             "Cajun Wings",
-            "78",
+            78,
             "是非常熟悉的某坛子肉辣椒的味道但是放到鸡上有点怪怪的",
             "2023-06-17T06:55:07.602Z"
+        ],
+        [
+            "Nando's (Kerrisdale)",
+            "wyy",
+            "Naughty Natas",
+            82,
+            "有点甜但还可以",
+            "2023-06-18T05:33:49.762Z"
+        ],
+        [
+            "Nando's (Kerrisdale)",
+            "wyy",
+            "Whole Chicken",
+            78,
+            "不如Bird N’ Hand的鸡",
+            "2023-06-18T05:34:01.261Z"
+        ],
+        [
+            "Nando's (Kerrisdale)",
+            "wyy",
+            "Garlic Mashed Potatoes",
+            76,
+            "不知道为什么加洋葱",
+            "2023-06-18T05:34:31.826Z"
+        ],
+        [
+            "Nando's (Kerrisdale)",
+            "7hr",
+            "",
+            "80",
+            "味道都挺好但是酱怪怪的",
+            "2023-06-18T05:35:54.737Z"
         ]
     ]
 }

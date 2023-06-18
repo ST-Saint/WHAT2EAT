@@ -13,6 +13,6 @@ args = parser.parse_args()
 # Access the parsed arguments
 if __name__ == "__main__":
     target = args.target
-    if target == "ubereasts":
+    if target == "ubereats":
         import uber_eats
         uber_eats.start()
