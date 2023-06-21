@@ -95,7 +95,7 @@
     "data": [
         [
             "Taste of Thai",
-            "wyy",
+            "st",
             "Pad Gra Paow + Rice & Fried Egg",
             80,
             "有点辣但还可以",
@@ -111,7 +111,7 @@
         ],
         [
             "Taste of Thai",
-            "wyy",
+            "st",
             "Beef Oyster Sauce",
             65,
             "甜酱油牛肉, 味道还行8, 但是不带饭",
@@ -127,7 +127,7 @@
         ],
         [
             "Mamalee Malaysian",
-            "wyy",
+            "st",
             "Scipy Pan Mee",
             70,
             "面, 蛋, 肉, 辣椒都很好, 但是小鱼干不是很喜欢",
@@ -167,7 +167,7 @@
         ],
         [
             "Bombay Masala Indian Restaurant",
-            "wyy",
+            "st",
             "Chicken Curry + Garlic Naan",
             70,
             "有ginger余味有点苦",
@@ -175,7 +175,7 @@
         ],
         [
             "Dong Tai Xiang Shanghai Dim Sum",
-            "wyy",
+            "st",
             "紅燒大排 和干挑麵 Braised Spareribs in Shanghai Local Flavor Combine With Stirred Noodle",
             80,
             "有点干, 大排并不是炸排骨",
@@ -271,7 +271,7 @@
         ],
         [
             "Yifang Fruit Tea 一芳台灣水果茶- Lougheed",
-            "wyy",
+            "st",
             "Caramel Pudding Black Tea Latte 焦糖布丁鲜奶茶 (50% sugar)",
             70,
             "50%糖还是不咋甜",
@@ -415,7 +415,7 @@
         ],
         [
             "耕食记",
-            "wyy",
+            "st",
             "砂锅原味鸡 Original Chinese Chicken (Signature dish)",
             60,
             "好柴好干, 60分里面10分给猪脚",
@@ -423,7 +423,7 @@
         ],
         [
             "耕食记",
-            "wyy",
+            "st",
             "红油烟笋 Spicy bamboo shoots",
             75,
             "相对来说算湘菜（虽然我不喜欢",
@@ -431,7 +431,7 @@
         ],
         [
             "耕食记",
-            "wyy",
+            "st",
             "温炝鲫鱼 Spicy Sliced Crucian Carp",
             80,
             "味道还行但有点少",
@@ -439,7 +439,7 @@
         ],
         [
             "耕食记",
-            "wyy",
+            "st",
             "酸辣椒炒牛肉 Fried beef with Sour Chili",
             60,
             "这也没酸辣椒啊",
@@ -447,7 +447,7 @@
         ],
         [
             "耕食记",
-            "wyy",
+            "st",
             "紫苏牛蛙 Stir fy Bullfrog with Thai Basil",
             50,
             "不知道是啥",
@@ -455,7 +455,7 @@
         ],
         [
             "耕食记",
-            "wyy",
+            "st",
             "松花蛋擂茄子 Century Eggs with Eggplant",
             50,
             "没有擂持, 没有辣椒, 皮蛋也很少",
@@ -495,7 +495,7 @@
         ],
         [
             "Corner 23 安可盧 萬巒豬腳",
-            "wyy",
+            "st",
             "Taiwan Style Fried Rice Noodle 台式炒米粉",
             85,
             "有点淡没啥辣味但是还可以",
@@ -503,7 +503,7 @@
         ],
         [
             "Gallery Patio & Lounge",
-            "wyy",
+            "st",
             "Butter Chicken",
             82,
             "naan和酱汁好吃, 味道比较甜",
@@ -511,7 +511,7 @@
         ],
         [
             "RedBeef Noodle Kitchen (W 4th Ave)",
-            "wyy",
+            "st",
             "Signature Beef Noodle Soup 紅燒牛肉麵 (White Thin Noodles 上選細白麵)",
             72,
             "跟米粉对比说不上哪里不对但是粉差点味道汤也差点味道",
@@ -543,7 +543,7 @@
         ],
         [
             "JOHN 3:16 Malaysian Delights Vancouver",
-            "wyy",
+            "st",
             "Char Koay Teow",
             87,
             "炒鸡蛋好吃, 要是有点别的什么肉就更好了",
@@ -570,12 +570,12 @@
             "7hr",
             "Roti Canai",
             82,
-            "7hr: 味道很像蛋挞挞皮; soup: 确实很像挞皮, 没有很筋道; wyy: 没有很甜",
+            "7hr: 味道很像蛋挞挞皮; soup: 确实很像挞皮, 没有很筋道; st: 没有很甜",
             "2023-06-16T04:06:24.171Z"
         ],
         [
             "Me and Crepe 国子煎 (ubc)",
-            "wyy",
+            "st",
             "Peking Duck 北京烤鸭 (Little Spicy 小辣) (With Egg & Lettuce 配鸡蛋和生菜)",
             78,
             "完全没有北京烤鸭味道",
@@ -583,7 +583,7 @@
         ],
         [
             "Bird N’ Hand (Broadway)",
-            "wyy",
+            "st",
             "Buffalo Wings",
             81,
             "有点焦有点干",
@@ -591,7 +591,7 @@
         ],
         [
             "Bird N’ Hand (Broadway)",
-            "wyy",
+            "st",
             "Cajun Wings",
             78,
             "是非常熟悉的某坛子肉辣椒的味道但是放到鸡上有点怪怪的",
@@ -599,7 +599,7 @@
         ],
         [
             "Nando's (Kerrisdale)",
-            "wyy",
+            "st",
             "Naughty Natas",
             82,
             "有点甜但还可以",
@@ -607,7 +607,7 @@
         ],
         [
             "Nando's (Kerrisdale)",
-            "wyy",
+            "st",
             "Whole Chicken",
             78,
             "不如Bird N’ Hand的鸡",
@@ -615,7 +615,7 @@
         ],
         [
             "Nando's (Kerrisdale)",
-            "wyy",
+            "st",
             "Garlic Mashed Potatoes",
             76,
             "不知道为什么加洋葱",
@@ -631,7 +631,7 @@
         ],
         [
             " Seaport City Restaurant 海洋城海鲜酒家",
-            "wyy",
+            "st",
             null,
             88,
             "芋头糕好吃, 红米肠中间某种薄脆不错, 粥很鲜",
@@ -687,7 +687,7 @@
         ],
         [
             "Rice and Noodle (West Broadway)",
-            "wyy",
+            "st",
             "Pad See Ew (Beef) (Chicken)",
             82,
             "鸡肉也太柴了, 加了不如不加, 蛋味道还可以",
@@ -711,7 +711,7 @@
         ],
         [
             " Van Tea Cafe 佰薈餐廳",
-            "wyy",
+            "st",
             "[8.Deep Fried Tofu with Chili Pepper (椒鹽豆腐), 9.Deep Fried Squid with Chili Pepper (椒鹽鮮魷), 14.Sautéed Shrimp and Scrambled Eggs (滑蛋蝦仁)]",
             75,
             "滑蛋虾仁有点油, 豆腐皮挺好吃但是里面没味道, 鱿鱼味道还行",
@@ -735,7 +735,7 @@
         ],
         [
             "Kinton Ramen (University Blvd)",
-            "wyy",
+            "st",
             "Pork Spicy (Thin)",
             80,
             "必须要少油, 少油的话挺好吃的",

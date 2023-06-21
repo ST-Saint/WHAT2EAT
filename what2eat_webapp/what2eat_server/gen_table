@@ -1,0 +1,7 @@
+#!/bin/sh
+
+tables=(reviews restaurants)
+
+for table in ${tables[@]}; do
+    python3 src/generate_markdown_table.py ${table}
+done
