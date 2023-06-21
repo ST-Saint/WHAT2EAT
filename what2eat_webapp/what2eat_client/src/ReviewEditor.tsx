@@ -32,9 +32,36 @@ const ReviewEditor = () => {
         formState: { errors },
     } = useForm<reviewForm>();
 
-    const reviwers: string[] = [];
-    const restaurants: string[] = [];
-    const dishes: string[] = [];
+    let reviewers: string[] = [];
+    let restaurants: string[] = [];
+    let dishes: string[] = [];
+
+    {
+        let jsonRPCBody: any = {
+            jsonrpc: '2.0',
+            method: 'get_reviewers',
+            params: {},
+            id: UUID(),
+        };
+        fetch('http://localhost:5000', {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(jsonRPCBody),
+            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        })
+            .then((resp) => {
+                return resp.json();
+                // reviewers = resp.body;
+                // console.log(resp.json())
+            })
+            .then((data) => {
+                reviewers = data.result;
+            })
+            .catch((error) => {
+                console.log(error);
+                reviewers = ['None'];
+            });
+    }
 
     const onSubmit: SubmitHandler<reviewForm> = async (review) => {
         review.date = new Date();
@@ -44,7 +71,7 @@ const ReviewEditor = () => {
             params: { review: review },
             id: UUID(),
         };
-        console.log(review);
+        // console.log(review);
         let response;
         try {
             response = await fetch('http://localhost:5000', {
@@ -56,9 +83,9 @@ const ReviewEditor = () => {
             if (response != null && !response.ok) {
                 /* Handle */
             }
-            console.log(response.body);
+            // console.log(response.body);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     };
 
@@ -90,7 +117,7 @@ const ReviewEditor = () => {
                                     onChange(value);
                                 }}
                                 disableClearable
-                                options={reviwers.map((reviewer) => reviewer)}
+                                options={reviewers.map((reviewer) => reviewer)}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
