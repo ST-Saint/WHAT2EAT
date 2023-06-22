@@ -90,7 +90,10 @@
         79,
         80,
         81,
-        82
+        82,
+        83,
+        84,
+        85
     ],
     "data": [
         [
@@ -753,9 +756,33 @@
             "Kinton Ramen (University Blvd)",
             "7hr",
             "Age Gyoza (Pork)",
-            "78",
+            78,
             "比鸡汤面好点",
             "2023-06-21T04:12:00.228Z"
+        ],
+        [
+            "Hitoe Sushi Japanese Restaurant",
+            "soup",
+            "Bara Chirashi Platter",
+            75,
+            "一般, 整体很甜",
+            "2023-06-22T06:48:27.205Z"
+        ],
+        [
+            "Hitoe Sushi Japanese Restaurant",
+            "7hr",
+            "[Bara Chirashi Platter, Melty Salmon (2 pieces)]",
+            78,
+            "送的三文鱼还可以, 大拼盘平平无奇, 刺身没有不新鲜的味道",
+            "2023-06-22T06:49:59.618Z"
+        ],
+        [
+            "Hitoe Sushi Japanese Restaurant",
+            "st",
+            "[Bara Chirashi Platter, Melty Salmon (2 pieces)]",
+            "80",
+            "送的三文鱼还可以, 大拼盘中带玉子烧的还可以",
+            "2023-06-22T06:50:48.358Z"
         ]
     ]
 }
