@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { v4 as UUID } from 'uuid';
@@ -32,36 +33,33 @@ const ReviewEditor = () => {
         formState: { errors },
     } = useForm<reviewForm>();
 
-    let reviewers: string[] = [];
+    let [reviewers, setReviewers] = useState([]);
     let restaurants: string[] = [];
     let dishes: string[] = [];
 
-    {
+    const getReviewers = async () => {
         let jsonRPCBody: any = {
             jsonrpc: '2.0',
             method: 'get_reviewers',
             params: {},
             id: UUID(),
         };
-        fetch('http://localhost:5000', {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(jsonRPCBody),
-            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-        })
-            .then((resp) => {
-                return resp.json();
-                // reviewers = resp.body;
-                // console.log(resp.json())
-            })
-            .then((data) => {
-                reviewers = data.result;
-            })
-            .catch((error) => {
-                console.log(error);
-                reviewers = ['None'];
+        try {
+            let resp = await fetch('http://localhost:5000', {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify(jsonRPCBody),
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             });
-    }
+            setReviewers((await resp.json()).result);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getReviewers();
+    }, []);
 
     const onSubmit: SubmitHandler<reviewForm> = async (review) => {
         review.date = new Date();
@@ -226,7 +224,7 @@ const ReviewEditor = () => {
                         {...register('comment')}
                     />
                     {errors.reviewer && <p>Reviewer is required</p>}
-
+                    {/* TODO check form before submit*/}
                     <Button type='submit' variant='contained'>
                         Submit
                     </Button>
