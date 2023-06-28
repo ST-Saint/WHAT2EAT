@@ -106,7 +106,14 @@
         95,
         96,
         97,
-        98
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105
     ],
     "data": [
         [
@@ -897,9 +904,65 @@
             "Grab N Go Hamilton",
             "st",
             "[Croquette (3 pcs), Deep Fried Chicken]",
-            "72",
+            72,
             "the same",
             "2023-06-27T03:32:02.230Z"
+        ],
+        [
+            "Rice Burger",
+            "并州小公主",
+            "Farmhouse Bowl",
+            30,
+            "不及格 菜太咸 米太干 肉太糊 量太少（太贵）",
+            "2023-06-28T05:03:19.355Z"
+        ],
+        [
+            "Rice Burger",
+            "st",
+            "Farmhouse Bowl",
+            40,
+            "什么b东西, 牛肉猪肉鸡肉没一个能吃的",
+            "2023-06-28T05:04:23.633Z"
+        ],
+        [
+            "Rice Burger",
+            "7hr",
+            "Spam Musubi",
+            73,
+            "挺咸的, 中间的午餐肉巨咸",
+            "2023-06-28T05:05:47.862Z"
+        ],
+        [
+            "McDonald's",
+            "st",
+            "Vanilla Cone",
+            75,
+            "奶味好重, 甜得发腻",
+            "2023-06-28T05:11:01.057Z"
+        ],
+        [
+            "McDonald's",
+            "st",
+            "Oreo McFlurry",
+            60,
+            "好腻的麦旋风, 我哭死",
+            "2023-06-28T05:13:56.442Z"
+        ],
+        [
+            "ICSCS Vending Machine",
+            "st",
+            "Orange Juice",
+            65,
+            "好酸好涩的橘子汁",
+            "2023-06-28T05:38:24.559Z"
+        ],
+        [
+            "Rice Burger",
+            "soup",
+            "Grilled Teri Chicken Bowl",
+            "0.142857",
+            "咸*142857",
+            "2023-06-28T05:46:16.823Z"
         ]
     ]
 }

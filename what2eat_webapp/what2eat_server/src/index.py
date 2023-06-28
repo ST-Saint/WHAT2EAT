@@ -10,7 +10,7 @@ class Review:
     reviewer: str
     restaurant: str
     dish: str
-    score: int
+    score: float
     comment: str
     date: datetime.date
 
