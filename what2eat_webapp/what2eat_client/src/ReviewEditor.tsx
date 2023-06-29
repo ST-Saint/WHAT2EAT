@@ -7,6 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import React from 'react';
 import { useState, useEffect } from 'react';
@@ -24,6 +26,20 @@ interface reviewForm {
     date: Date;
 }
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+    width: 600,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
+
 const ReviewEditor = () => {
     const {
         register,
@@ -33,6 +49,17 @@ const ReviewEditor = () => {
         formState: { errors },
     } = useForm<reviewForm>();
 
+
+    let [confirmPopup,
+        setConfirmPopup] = useState(false);
+
+    // response status code
+    // 0: sent but not yield yet
+    // -1: network error
+    // number: http status code
+    let [response, setResponse] = useState(0);
+
+    let [responseMessage, setResponseMessage] = useState("");
     let [reviewers, setReviewers] = useState([]);
     let restaurants: string[] = [];
     let dishes: string[] = [];
@@ -61,7 +88,17 @@ const ReviewEditor = () => {
         getReviewers();
     }, []);
 
+    const handleOpen = () => {
+        setConfirmPopup(true);
+    };
+    const handleClose = () => {
+        if( response !=0 ){
+            setConfirmPopup(false);
+        }
+    };
+
     const onSubmit: SubmitHandler<reviewForm> = async (review) => {
+        handleOpen();
         review.date = new Date();
         let jsonRPCBody: any = {
             jsonrpc: '2.0',
@@ -71,6 +108,8 @@ const ReviewEditor = () => {
         };
         // console.log(review);
         let response;
+        setResponse(0);
+        setResponseMessage("...");
         try {
             response = await fetch('http://localhost:5000', {
                 method: 'POST',
@@ -81,8 +120,16 @@ const ReviewEditor = () => {
             if (response != null && !response.ok) {
                 /* Handle */
             }
+            setResponse(response.status);
             // console.log(response.body);
-        } catch (error) {
+            setResponseMessage((await response.json()).result);
+        } catch (error: any) {
+            setResponse(-1);
+            if (typeof error.message === "string") {
+                setResponseMessage(error.message);
+            }else{
+                setResponseMessage("UNKNOWN");
+            }
             console.log(error);
         }
     };
@@ -230,6 +277,21 @@ const ReviewEditor = () => {
                     </Button>
                 </Stack>
             </form>
+
+            <Modal
+                open={confirmPopup}
+                onClose={handleClose}
+                aria-labelledby='child-modal-title'
+                aria-describedby='child-modal-description'
+            >
+                <Box sx={{ ...style }}>
+                    <h2 id='child-modal-title'>Sumbmit Sent</h2>
+                    <p id='child-modal-description'>
+                        {responseMessage}
+                    </p>
+                    <Button variant='contained' onClick={handleClose }>Close</Button>
+                </Box>
+            </Modal>
         </>
     );
 };
