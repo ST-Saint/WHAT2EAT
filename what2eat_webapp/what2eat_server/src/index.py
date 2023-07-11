@@ -22,7 +22,7 @@ app = Flask(__name__)
 
 @method
 def get_reviewers() -> Result:
-    return Success(["st", "soup", "7hr", "s00", "并州小公主"])
+    return Success(["st", "soup", "7hr", "s00", "并州小郡主"])
 
 
 @method
