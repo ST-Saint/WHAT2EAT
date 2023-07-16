@@ -9,3 +9,5 @@
 | 3 | 城市炭烤 feel city bbq           | 3                | 52.40   | 2023-07-07 |
 | 4 | Boiling Point (Vancouver)        | 4                | 28.04   | 2023-07-08 |
 | 5 | Neptune Chinese Kitchen-Wesbrook | 3                | 25.80   | 2023-07-08 |
+| 6 | 湘川荟 (XIANG CHUAN MANSION)     | 6                | 29.50   | 2023-07-14 |
+| 7 | 皇城根儿 The Corner Hotpot       | 2                | 65.00   | 2023-07-15 |

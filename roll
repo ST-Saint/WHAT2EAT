@@ -1,0 +1,16 @@
+#!/usr/bin/python3
+
+import random
+import json
+import pandas as pd
+import numpy as np
+
+review_path = "/home/yayu/Project/WHAT2EAT/what2eat_webapp/what2eat_server/data/reviews.json"
+
+df = pd.read_json(open(review_path).read(), orient="split")
+
+df = df[["restaurant", "score"]].groupby('restaurant').mean()
+
+# print(random.choice(np.unique(df["restaurant"])))
+print(df.sort_values('score', ascending=False).to_markdown())
+print(random.choices(list(df.index), list(df["score"])))
