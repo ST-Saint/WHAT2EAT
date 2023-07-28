@@ -14,6 +14,7 @@ const NavigationBar = () => {
                     <Nav className='me-auto'>
                         <Nav.Link href='/'>Home</Nav.Link>
                         <Nav.Link href='/revieweditor'>ReviewEditor</Nav.Link>
+                        <Nav.Link href='/expenseeditor'>ExpenseEditor</Nav.Link>
                         {/* TODO(table display): add Nav.Link to table*/}
                     </Nav>
                 </Navbar.Collapse>

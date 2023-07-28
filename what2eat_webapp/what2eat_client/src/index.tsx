@@ -6,6 +6,7 @@ import ReviewEditor from './ReviewEditor';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ExpenseEditor from './ExpenseEditor';
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
     {
         path: '/revieweditor',
         element: <ReviewEditor />,
+    },
+    {
+        path: '/expenseeditor',
+        element: <ExpenseEditor />,
     }
     // TODO(display table): add new router
 ]);

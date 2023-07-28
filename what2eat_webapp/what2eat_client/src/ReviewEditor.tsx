@@ -280,6 +280,9 @@ const ReviewEditor = () => {
                                 ) => {
                                     onChange(event.target.value);
                                 }}
+                                inputProps={{
+                                    step: 0.1,
+                                }}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
