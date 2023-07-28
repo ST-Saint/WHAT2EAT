@@ -46,6 +46,7 @@ const ReviewEditor = () => {
         control,
         handleSubmit,
         watch,
+        setValue,getValues,
         formState: { errors },
     } = useForm<reviewForm>();
 
@@ -61,7 +62,7 @@ const ReviewEditor = () => {
 
     let [responseMessage, setResponseMessage] = useState("");
     let [reviewers, setReviewers] = useState([]);
-    let restaurants: string[] = [];
+    let [restaurants, setRestaurants] = useState([]);
     let dishes: string[] = [];
 
     const getReviewers = async () => {
@@ -84,8 +85,30 @@ const ReviewEditor = () => {
         }
     };
 
+    const getRestaurants = async () => {
+        let jsonRPCBody: any = {
+            jsonrpc: '2.0',
+            method: 'get_restaurants',
+            params: {},
+            id: UUID(),
+        };
+        try {
+            let resp = await fetch('http://localhost:5000', {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify(jsonRPCBody),
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+            });
+            setRestaurants((await resp.json()).result);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
     useEffect(() => {
         getReviewers();
+        getRestaurants();
     }, []);
 
     const handleOpen = () => {
@@ -123,6 +146,7 @@ const ReviewEditor = () => {
             setResponse(response.status);
             // console.log(response.body);
             setResponseMessage((await response.json()).result);
+            setValue("reviewer", "");
         } catch (error: any) {
             setResponse(-1);
             if (typeof error.message === "string") {
@@ -155,13 +179,14 @@ const ReviewEditor = () => {
                         render={({ field: { onChange, value } }) => (
                             <Autocomplete
                                 freeSolo
+                                value={watch("reviewer") || ""}
+                                inputValue={value || ""}
                                 onChange={(event, value) => {
                                     onChange(value);
                                 }}
                                 onInputChange={(event, value) => {
                                     onChange(value);
                                 }}
-                                disableClearable
                                 options={reviewers.map((reviewer) => reviewer)}
                                 renderInput={(params) => (
                                     <TextField
@@ -190,7 +215,6 @@ const ReviewEditor = () => {
                                 onInputChange={(event, value) => {
                                     onChange(value);
                                 }}
-                                disableClearable
                                 options={restaurants.map(
                                     (restaurant) => restaurant,
                                 )}
@@ -220,7 +244,6 @@ const ReviewEditor = () => {
                                 onInputChange={(event, value) => {
                                     onChange(value);
                                 }}
-                                disableClearable
                                 options={dishes.map((dish) => dish)}
                                 renderInput={(params) => (
                                     <TextField

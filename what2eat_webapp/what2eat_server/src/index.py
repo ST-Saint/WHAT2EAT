@@ -21,8 +21,18 @@ app = Flask(__name__)
 
 
 @method
+def get_restaurants() -> Result:
+    review_df = load_df_from_json("reviews.json")
+    restaurants = list(pd.unique(review_df["restaurant"].iloc[::-1]))
+    return Success(restaurants)
+
+
+@method
 def get_reviewers() -> Result:
-    return Success(["st", "soup", "7hr", "s00", "并州小郡主"])
+    review_df = load_df_from_json("reviews.json")
+    review_df = review_df[["reviewer"]].groupby("reviewer").size().sort_values(ascending=False)
+    reviewers = review_df.index.to_list()
+    return Success(reviewers)
 
 
 @method
