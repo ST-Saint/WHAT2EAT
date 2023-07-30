@@ -24,7 +24,7 @@ interface Data {
     restaurant: string;
     score: number;
     comment: string;
-    date: string;
+    date: Date;
 }
 
 interface TablePaginationActionsProps {
@@ -138,6 +138,7 @@ const ReviewTable = () => {
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             });
             let result = (await resp.json()).result;
+            result.reverse();
             setReviews(result);
         } catch (error) {
             console.log(error);
@@ -206,7 +207,7 @@ const ReviewTable = () => {
                                     {review.comment}
                                 </TableCell>
                                 <TableCell align='center'>
-                                    {review.date}
+                                    {review.date.toString()}
                                 </TableCell>
                             </TableRow>
                         ))}
