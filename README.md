@@ -1,6 +1,8 @@
 # WHAT2EAT
 WHAT2EAT!?
 
+![WHAT2EAT!?](./what2eat_webapp/what2eat_client/src/WHAT2EAT.png)
+
 ## [Review](./what2eat_webapp/what2eat_server/data/reviews.md)
 
 ## [Restaurant](./what2eat_webapp/what2eat_server/data/restaurants.md)
