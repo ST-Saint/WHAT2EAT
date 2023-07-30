@@ -1,7 +1,5 @@
 # WHAT2EAT
-WHAT2EAT!?
-
-<img src="what2eat_webapp/what2eat_client/src/WHAT2EAT.png" height="800"/>
+<img src="what2eat_webapp/what2eat_client/src/WHAT2EAT.png" height="400"/>
 
 ## [Review](./what2eat_webapp/what2eat_server/data/reviews.md)
 
