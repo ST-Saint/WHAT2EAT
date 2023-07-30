@@ -22,6 +22,7 @@ interface Data {
     uuid: string;
     reviewer: string;
     restaurant: string;
+    dish: string;
     score: number;
     comment: string;
     date: Date;
@@ -176,6 +177,7 @@ const ReviewTable = () => {
                             <TableCell align='center'>Restaurant</TableCell>
                             <TableCell align='center'>Reviewer</TableCell>
                             <TableCell align='center'>Score</TableCell>
+                            <TableCell align='center'>Dish</TableCell>
                             <TableCell align='center'>Comment</TableCell>
                             <TableCell align='center'>Date</TableCell>
                         </TableRow>
@@ -202,6 +204,9 @@ const ReviewTable = () => {
                                 </TableCell>
                                 <TableCell align='center'>
                                     {review.score}
+                                </TableCell>
+                                <TableCell align='center'>
+                                    {review.dish}
                                 </TableCell>
                                 <TableCell align='center'>
                                     {review.comment}
