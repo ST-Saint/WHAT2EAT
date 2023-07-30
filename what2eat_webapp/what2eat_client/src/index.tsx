@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
+import ExpenseEditor from './ExpenseEditor';
 import ReviewEditor from './ReviewEditor';
+import ReviewTable from './ReviewTable';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ExpenseEditor from './ExpenseEditor';
 
 const router = createBrowserRouter([
     {
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
     {
         path: '/expenseeditor',
         element: <ExpenseEditor />,
-    }
+    },
+    {
+        path: '/reviewtable',
+        element: <ReviewTable />,
+    },
     // TODO(display table): add new router
 ]);
 

@@ -65,6 +65,13 @@ const ReviewEditor = () => {
     let [restaurants, setRestaurants] = useState([]);
     let dishes: string[] = [];
 
+
+    useEffect(() => {
+        getReviewers();
+        getRestaurants();
+    }, []);
+
+
     const getReviewers = async () => {
         let jsonRPCBody: any = {
             jsonrpc: '2.0',
@@ -104,12 +111,6 @@ const ReviewEditor = () => {
             console.log(error);
         }
     };
-
-
-    useEffect(() => {
-        getReviewers();
-        getRestaurants();
-    }, []);
 
     const handleOpen = () => {
         setConfirmPopup(true);

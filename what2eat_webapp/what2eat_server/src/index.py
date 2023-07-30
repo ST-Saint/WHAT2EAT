@@ -36,6 +36,15 @@ def get_reviewers() -> Result:
 
 
 @method
+def get_reviews() -> Result:
+    review_df = load_df_from_json("reviews.json")
+    reviews_str = review_df.to_json(orient="records")
+    reviews = []
+    if reviews_str:
+        reviews = json.loads(reviews_str)
+    return Success(reviews)
+
+@method
 def add_review(review: Review) -> Result:
     print(json.dumps(review, indent=4, ensure_ascii=False))
     review_history = load_df_from_json("reviews.json")
