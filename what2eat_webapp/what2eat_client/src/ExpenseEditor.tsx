@@ -68,7 +68,7 @@ const ExpenseEditor = () => {
             id: UUID(),
         };
         try {
-            let resp = await fetch('http://localhost:5000', {
+            let resp = await fetch('http://128.189.17.124:5000', {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
@@ -107,7 +107,7 @@ const ExpenseEditor = () => {
         setResponse(0);
         setResponseMessage('...');
         try {
-            response = await fetch('http://localhost:5000', {
+            response = await fetch('http://128.189.17.124:5000', {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
