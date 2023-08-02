@@ -24,6 +24,7 @@ interface reviewForm {
     score: number;
     comment: string;
     date: Date;
+    uuid: string;
 }
 
 const style = {
@@ -124,6 +125,7 @@ const ReviewEditor = () => {
     const onSubmit: SubmitHandler<reviewForm> = async (review) => {
         handleOpen();
         review.date = new Date();
+        review.uuid = UUID();
         let jsonRPCBody: any = {
             jsonrpc: '2.0',
             method: 'add_review',
