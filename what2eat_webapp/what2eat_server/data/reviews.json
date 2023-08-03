@@ -197,7 +197,9 @@
         185,
         186,
         187,
-        188
+        188,
+        189,
+        190
     ],
     "data": [
         [
@@ -1896,10 +1898,28 @@
             "Peaceful Restaurant (Broadway)",
             "st",
             "[\"Peaceful Beef Rolls (2 pcs) (牛肉卷餅)\", \"Sichuan String Beans (干煸四季豆)\", \"Yang-Zhou Stir-fried Rice (楊州炒飯)\", \"Sichuan Thousand Chili Chicken (四川辣子雞)\", \"Northern Curry Stir-fried Rice (咖喱炒飯)\"]",
-            "78",
+            78.0,
             "炒饭量大, 辣子鸡是鱼, 牛肉卷餅确实好吃",
             "2023-08-02T03:49:23.780Z",
             "4dcdc69d-2315-402a-8a58-57566d5eead6"
+        ],
+        [
+            "Mapo Pancake House",
+            "7hr",
+            "[\"Seafood Tteokbokki (해물떡볶이)\", \"BBQ Chicken Pancake (BBQ치킨전)\"]",
+            80.0,
+            "pancake味道还可以, 辣炒年糕辣炒乌冬就那样吧",
+            "2023-08-03T04:44:37.481Z",
+            "16369126-065f-4d5e-93ce-196d7ec06dea"
+        ],
+        [
+            "Mapo Pancake House",
+            "st",
+            "[\"Seafood Tteokbokki (해물떡볶이)\", \"BBQ Chicken Pancake (BBQ치킨전)\"]",
+            "79",
+            "pancake味道还可以, 但是如果点seafood pancake会更好吃, 辣炒年糕比较一般, 虽然我本来也不是很喜欢吃这种辣",
+            "2023-08-03T04:45:43.330Z",
+            "a36d63bc-d4b2-4058-8dd6-7509a3af48d9"
         ]
     ]
 }
