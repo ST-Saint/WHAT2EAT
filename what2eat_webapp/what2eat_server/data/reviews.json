@@ -199,7 +199,9 @@
         187,
         188,
         189,
-        190
+        190,
+        191,
+        192
     ],
     "data": [
         [
@@ -1916,10 +1918,28 @@
             "Mapo Pancake House",
             "st",
             "[\"Seafood Tteokbokki (해물떡볶이)\", \"BBQ Chicken Pancake (BBQ치킨전)\"]",
-            "79",
+            79.0,
             "pancake味道还可以, 但是如果点seafood pancake会更好吃, 辣炒年糕比较一般, 虽然我本来也不是很喜欢吃这种辣",
             "2023-08-03T04:45:43.330Z",
             "a36d63bc-d4b2-4058-8dd6-7509a3af48d9"
+        ],
+        [
+            "Chewies Biscuit Co.",
+            "7hr",
+            "[\"BACON BENNY\", \"TRADITIONAL BUTTERMILK BISCUIT\"]",
+            77.0,
+            "Biscuit奶香味重, 但很干, 拿来早餐配牛奶应该可以, Bacon太咸, 太咸了, 或许是英国人喜欢的咸吧",
+            "2023-08-04T04:09:14.652Z",
+            "4de9bdda-3922-44f2-ab75-c6c9ea002ab7"
+        ],
+        [
+            "Chewies Biscuit Co.",
+            "st",
+            "3PC CRISPY CHICKEN COMBO (HONEY MUSTARD, Apple Juice, Fries)",
+            "82",
+            "鸡肉味道不错, 壳单吃有点苦, 自带的酱味道一般般, 本来点mashed potato但是卖完了给了Fries, 店家有认真看notes挺好的",
+            "2023-08-04T04:11:41.655Z",
+            "cb7a7ec1-c600-4691-9fc7-619614ded49f"
         ]
     ]
 }
