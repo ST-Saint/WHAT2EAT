@@ -13,6 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useState, useEffect } from 'react';
@@ -37,6 +38,23 @@ interface TablePaginationActionsProps {
         newPage: number,
     ) => void;
 }
+
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '20%',
+    left: '50%',
+    transform: 'translate(-50%, 0%)',
+    width: 1000,
+    bgcolor: 'background.paper',
+    borderColor: 'primary.main',
+    // border: '1px solid #3399ff',
+    boxShadow: 24,
+    borderRadius: 2,
+    pt: 2,
+    px: 4,
+    pb: 3,
+};
+
 function TablePaginationActions(props: TablePaginationActionsProps) {
     const theme = useTheme();
     const { count, page, rowsPerPage, onPageChange } = props;
@@ -170,8 +188,8 @@ const ReviewTable = () => {
     return (
         <>
             <NavigationBar />
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableContainer component={Paper} sx={style}>
+                <Table sx={{ minWidth: 600 }} aria-label='simple table'>
                     <TableHead>
                         <TableRow>
                             <TableCell align='center'>Restaurant</TableCell>
@@ -231,6 +249,7 @@ const ReviewTable = () => {
                     rowsPerPageOptions={[5, 10]}
                     colSpan={3}
                     component='div'
+                    sx={{justifyContent: "center", alignItems: "center", display: "flex", width: 999}}
                     count={reviews.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
