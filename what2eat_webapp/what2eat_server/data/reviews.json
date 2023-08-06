@@ -201,7 +201,9 @@
         189,
         190,
         191,
-        192
+        192,
+        193,
+        194
     ],
     "data": [
         [
@@ -1936,10 +1938,28 @@
             "Chewies Biscuit Co.",
             "st",
             "3PC CRISPY CHICKEN COMBO (HONEY MUSTARD, Apple Juice, Fries)",
-            "82",
+            82.0,
             "鸡肉味道不错, 壳单吃有点苦, 自带的酱味道一般般, 本来点mashed potato但是卖完了给了Fries, 店家有认真看notes挺好的",
             "2023-08-04T04:11:41.655Z",
             "cb7a7ec1-c600-4691-9fc7-619614ded49f"
+        ],
+        [
+            "Neptune Eats Kerrisdale 凤鸣",
+            "7hr",
+            "ScrambledEggWithBBQPork 叉燒滑炒蛋",
+            80.0,
+            "他还加了韭黄在里面, 我还挺喜欢的",
+            "2023-08-05T05:48:46.199Z",
+            "7250da44-c400-4976-93ca-becc29da3b21"
+        ],
+        [
+            "Neptune Eats Kerrisdale 凤鸣",
+            "st",
+            "FreshShrimpWontonTossedNoodle 鮮蝦雲吞麵",
+            "65",
+            "鮮蝦雲吞还可以, 这个面是真的难吃啊, 从来没吃过这么难吃的面, 我还选的米粉, 实际上给的是不知道什么一毛钱味道都没有的面",
+            "2023-08-05T05:51:33.540Z",
+            "7459e5d6-647e-4756-8f56-47b8fe7ed369"
         ]
     ]
 }
