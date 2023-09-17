@@ -1,21 +1,22 @@
+import NavigationBar from './NavigationBar';
+import { Config } from './config';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Stack from '@mui/material/Stack';
 import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { v4 as UUID } from 'uuid';
-import NavigationBar from './NavigationBar';
 
 interface reviewForm {
     reviewer: string;
@@ -28,17 +29,17 @@ interface reviewForm {
 }
 
 const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 600,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
 };
 
 const ReviewEditor = () => {
@@ -47,13 +48,12 @@ const ReviewEditor = () => {
         control,
         handleSubmit,
         watch,
-        setValue,getValues,
+        setValue,
+        getValues,
         formState: { errors },
     } = useForm<reviewForm>();
 
-
-    let [confirmPopup,
-        setConfirmPopup] = useState(false);
+    let [confirmPopup, setConfirmPopup] = useState(false);
 
     // response status code
     // 0: sent but not yield yet
@@ -61,17 +61,15 @@ const ReviewEditor = () => {
     // number: http status code
     let [response, setResponse] = useState(0);
 
-    let [responseMessage, setResponseMessage] = useState("");
+    let [responseMessage, setResponseMessage] = useState('');
     let [reviewers, setReviewers] = useState([]);
     let [restaurants, setRestaurants] = useState([]);
     let dishes: string[] = [];
-
 
     useEffect(() => {
         getReviewers();
         getRestaurants();
     }, []);
-
 
     const getReviewers = async () => {
         let jsonRPCBody: any = {
@@ -81,13 +79,14 @@ const ReviewEditor = () => {
             id: UUID(),
         };
         try {
-            let resp = await fetch('http://127.0.0.1:5000', {
+            let resp = await fetch(Config.serverIP, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             });
-            setReviewers((await resp.json()).result);
+            let reviewers = JSON.parse((await resp.json()).result);
+            setReviewers(reviewers);
         } catch (error) {
             console.log(error);
         }
@@ -101,13 +100,13 @@ const ReviewEditor = () => {
             id: UUID(),
         };
         try {
-            let resp = await fetch('http://127.0.0.1:5000', {
+            let resp = await fetch(Config.serverIP, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             });
-            setRestaurants((await resp.json()).result);
+            setRestaurants(JSON.parse((await resp.json()).result));
         } catch (error) {
             console.log(error);
         }
@@ -117,7 +116,7 @@ const ReviewEditor = () => {
         setConfirmPopup(true);
     };
     const handleClose = () => {
-        if( response !=0 ){
+        if (response != 0) {
             setConfirmPopup(false);
         }
     };
@@ -129,15 +128,15 @@ const ReviewEditor = () => {
         let jsonRPCBody: any = {
             jsonrpc: '2.0',
             method: 'add_review',
-            params: { review: review },
+            params: review,
             id: UUID(),
         };
         // console.log(review);
         let response;
         setResponse(0);
-        setResponseMessage("...");
+        setResponseMessage('...');
         try {
-            response = await fetch('http://127.0.0.1:5000', {
+            response = await fetch(Config.serverIP, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
@@ -147,15 +146,15 @@ const ReviewEditor = () => {
                 /* Handle */
             }
             setResponse(response.status);
-            // console.log(response.body);
+            // console.log((await response.json()).result);
             setResponseMessage((await response.json()).result);
-            setValue("reviewer", "");
+            setValue('reviewer', '');
         } catch (error: any) {
             setResponse(-1);
-            if (typeof error.message === "string") {
+            if (typeof error.message === 'string') {
                 setResponseMessage(error.message);
-            }else{
-                setResponseMessage("UNKNOWN");
+            } else {
+                setResponseMessage('UNKNOWN');
             }
             console.log(error);
         }
@@ -182,15 +181,17 @@ const ReviewEditor = () => {
                         render={({ field: { onChange, value } }) => (
                             <Autocomplete
                                 freeSolo
-                                value={watch("reviewer") || ""}
-                                inputValue={value || ""}
+                                value={watch('reviewer') || ''}
+                                inputValue={value || ''}
                                 onChange={(event, value) => {
                                     onChange(value);
                                 }}
                                 onInputChange={(event, value) => {
                                     onChange(value);
                                 }}
-                                options={reviewers.map((reviewer) => reviewer)}
+                                options={reviewers.map(
+                                    (reviewer: any) => reviewer.name,
+                                )}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -219,7 +220,7 @@ const ReviewEditor = () => {
                                     onChange(value);
                                 }}
                                 options={restaurants.map(
-                                    (restaurant) => restaurant,
+                                    (restaurant: any) => restaurant.name,
                                 )}
                                 renderInput={(params) => (
                                     <TextField
@@ -315,10 +316,10 @@ const ReviewEditor = () => {
             >
                 <Box sx={{ ...style }}>
                     <h2 id='child-modal-title'>Sumbmit Sent</h2>
-                    <p id='child-modal-description'>
-                        {responseMessage}
-                    </p>
-                    <Button variant='contained' onClick={handleClose }>Close</Button>
+                    <p id='child-modal-description'>{responseMessage}</p>
+                    <Button variant='contained' onClick={handleClose}>
+                        Close
+                    </Button>
                 </Box>
             </Modal>
         </>

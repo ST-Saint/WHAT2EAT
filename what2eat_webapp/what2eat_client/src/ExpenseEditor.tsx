@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import { v4 as UUID } from 'uuid';
+import { Config } from './config';
 
 interface expenseForm {
     restaurant: string;
@@ -68,7 +69,7 @@ const ExpenseEditor = () => {
             id: UUID(),
         };
         try {
-            let resp = await fetch('http://128.189.17.124:5000', {
+            let resp = await fetch(Config.serverIP, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
@@ -107,7 +108,7 @@ const ExpenseEditor = () => {
         setResponse(0);
         setResponseMessage('...');
         try {
-            response = await fetch('http://128.189.17.124:5000', {
+            response = await fetch(Config.serverIP, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
