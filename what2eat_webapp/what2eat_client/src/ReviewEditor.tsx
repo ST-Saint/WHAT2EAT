@@ -85,6 +85,7 @@ const ReviewEditor = () => {
                 body: JSON.stringify(jsonRPCBody),
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             });
+            console.log((await resp.json()).result);
             let reviewers = JSON.parse((await resp.json()).result);
             setReviewers(reviewers);
         } catch (error) {
