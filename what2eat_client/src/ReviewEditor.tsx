@@ -1,4 +1,6 @@
+import DiningEditor from './DiningEditor';
 import NavigationBar from './NavigationBar';
+import { JRPCRequest, JRPCBody } from './RPC/JRPCRequest';
 import { Config } from './config';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -61,7 +63,8 @@ const ReviewEditor = () => {
     // number: http status code
     let [response, setResponse] = useState(0);
 
-    let [responseMessage, setResponseMessage] = useState('');
+    let [responseMessage, setResponseMessage] =
+        useState('');
     let [reviewers, setReviewers] = useState([]);
     let [restaurants, setRestaurants] = useState([]);
     let dishes: string[] = [];
@@ -72,45 +75,17 @@ const ReviewEditor = () => {
     }, []);
 
     const getReviewers = async () => {
-        let jsonRPCBody: any = {
-            jsonrpc: '2.0',
-            method: 'get_reviewers',
-            params: {},
-            id: UUID(),
-        };
-        try {
-            let resp = await fetch(Config.serverIP, {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(jsonRPCBody),
-                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-            });
-            console.log((await resp.json()).result);
-            let reviewers = JSON.parse((await resp.json()).result);
-            setReviewers(reviewers);
-        } catch (error) {
-            console.log(error);
-        }
+        let getReviewersBody = JRPCBody('get_reviewers');
+        let response = await JRPCRequest(getReviewersBody);
+        let reviewers = JSON.parse(response.result);
+        setReviewers(reviewers);
     };
 
     const getRestaurants = async () => {
-        let jsonRPCBody: any = {
-            jsonrpc: '2.0',
-            method: 'get_restaurants',
-            params: {},
-            id: UUID(),
-        };
-        try {
-            let resp = await fetch(Config.serverIP, {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(jsonRPCBody),
-                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-            });
-            setRestaurants(JSON.parse((await resp.json()).result));
-        } catch (error) {
-            console.log(error);
-        }
+        let getReviewersBody = JRPCBody('get_restaurants');
+        let response = await JRPCRequest(getReviewersBody);
+        let restaurants = JSON.parse(response.result);
+        setRestaurants(restaurants);
     };
 
     const handleOpen = () => {
@@ -122,33 +97,28 @@ const ReviewEditor = () => {
         }
     };
 
-    const onSubmit: SubmitHandler<reviewForm> = async (review) => {
+    const onSubmit: SubmitHandler<reviewForm> = async (
+        review,
+    ) => {
         handleOpen();
         review.date = new Date();
         review.uuid = UUID();
-        let jsonRPCBody: any = {
-            jsonrpc: '2.0',
-            method: 'add_review',
-            params: review,
-            id: UUID(),
-        };
+        let addReviewBody: any = JRPCBody(
+            'add_review',
+            review,
+        );
         // console.log(review);
         let response;
         setResponse(0);
         setResponseMessage('...');
         try {
-            response = await fetch(Config.serverIP, {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(jsonRPCBody),
-                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-            });
+            response = await JRPCRequest(addReviewBody);
             if (response != null && !response.ok) {
                 /* Handle */
             }
             setResponse(response.status);
             // console.log((await response.json()).result);
-            setResponseMessage((await response.json()).result);
+            setResponseMessage(response.result);
             setValue('reviewer', '');
         } catch (error: any) {
             setResponse(-1);
@@ -164,6 +134,7 @@ const ReviewEditor = () => {
     return (
         <>
             <NavigationBar />
+            <DiningEditor />
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className={css`
@@ -179,19 +150,30 @@ const ReviewEditor = () => {
                         name='reviewer'
                         control={control}
                         rules={{ required: true }}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                            field: { onChange, value },
+                        }) => (
                             <Autocomplete
                                 freeSolo
-                                value={watch('reviewer') || ''}
+                                value={
+                                    watch('reviewer') || ''
+                                }
                                 inputValue={value || ''}
-                                onChange={(event, value) => {
+                                onChange={(
+                                    event,
+                                    value,
+                                ) => {
                                     onChange(value);
                                 }}
-                                onInputChange={(event, value) => {
+                                onInputChange={(
+                                    event,
+                                    value,
+                                ) => {
                                     onChange(value);
                                 }}
                                 options={reviewers.map(
-                                    (reviewer: any) => reviewer.name,
+                                    (reviewer: any) =>
+                                        reviewer.name,
                                 )}
                                 renderInput={(params) => (
                                     <TextField
@@ -211,17 +193,26 @@ const ReviewEditor = () => {
                         name='restaurant'
                         control={control}
                         rules={{ required: true }}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                            field: { onChange, value },
+                        }) => (
                             <Autocomplete
                                 freeSolo
-                                onChange={(event, value) => {
+                                onChange={(
+                                    event,
+                                    value,
+                                ) => {
                                     onChange(value);
                                 }}
-                                onInputChange={(event, value) => {
+                                onInputChange={(
+                                    event,
+                                    value,
+                                ) => {
                                     onChange(value);
                                 }}
                                 options={restaurants.map(
-                                    (restaurant: any) => restaurant.name,
+                                    (restaurant: any) =>
+                                        restaurant.name,
                                 )}
                                 renderInput={(params) => (
                                     <TextField
@@ -240,16 +231,26 @@ const ReviewEditor = () => {
                     <Controller
                         name='dish'
                         control={control}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                            field: { onChange, value },
+                        }) => (
                             <Autocomplete
                                 freeSolo
-                                onChange={(event, value) => {
+                                onChange={(
+                                    event,
+                                    value,
+                                ) => {
                                     onChange(value);
                                 }}
-                                onInputChange={(event, value) => {
+                                onInputChange={(
+                                    event,
+                                    value,
+                                ) => {
                                     onChange(value);
                                 }}
-                                options={dishes.map((dish) => dish)}
+                                options={dishes.map(
+                                    (dish) => dish,
+                                )}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -269,21 +270,29 @@ const ReviewEditor = () => {
                         control={control}
                         rules={{ required: true }}
                         defaultValue={0}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                            field: { onChange, value },
+                        }) => (
                             <TextField
                                 label='Score'
                                 type='number'
                                 defaultValue={0}
-                                error={isNaN(value) || value > 100}
+                                error={
+                                    isNaN(value) ||
+                                    value > 100
+                                }
                                 helperText={
-                                    isNaN(value) || value > 100
+                                    isNaN(value) ||
+                                    value > 100
                                         ? 'Score must be <= 100'
                                         : ''
                                 }
                                 onChange={(
                                     event: React.ChangeEvent<HTMLInputElement>,
                                 ) => {
-                                    onChange(event.target.value);
+                                    onChange(
+                                        event.target.value,
+                                    );
                                 }}
                                 inputProps={{
                                     step: 0.1,
@@ -301,9 +310,14 @@ const ReviewEditor = () => {
                         maxRows={5}
                         {...register('comment')}
                     />
-                    {errors.reviewer && <p>Reviewer is required</p>}
+                    {errors.reviewer && (
+                        <p>Reviewer is required</p>
+                    )}
                     {/* TODO check form before submit*/}
-                    <Button type='submit' variant='contained'>
+                    <Button
+                        type='submit'
+                        variant='contained'
+                    >
                         Submit
                     </Button>
                 </Stack>
@@ -316,9 +330,16 @@ const ReviewEditor = () => {
                 aria-describedby='child-modal-description'
             >
                 <Box sx={{ ...style }}>
-                    <h2 id='child-modal-title'>Sumbmit Sent</h2>
-                    <p id='child-modal-description'>{responseMessage}</p>
-                    <Button variant='contained' onClick={handleClose}>
+                    <h2 id='child-modal-title'>
+                        Sumbmit Sent
+                    </h2>
+                    <p id='child-modal-description'>
+                        {responseMessage}
+                    </p>
+                    <Button
+                        variant='contained'
+                        onClick={handleClose}
+                    >
                         Close
                     </Button>
                 </Box>
