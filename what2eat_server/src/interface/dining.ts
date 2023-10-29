@@ -1,5 +1,5 @@
 export interface Dining {
     uuid: string;
-    unix_timestamp: number;
+    unixTimestamp: number;
     restaurant: string;
 }

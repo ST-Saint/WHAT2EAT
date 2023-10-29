@@ -58,7 +58,7 @@ export const Migrate = async () => {
 
                 // dining.uuid = UUID();
                 dining.restaurant = restaurant.name;
-                dining.unix_timestamp =
+                dining.unixTimestamp =
                     Math.floor(
                         Math.floor(
                             Math.floor(

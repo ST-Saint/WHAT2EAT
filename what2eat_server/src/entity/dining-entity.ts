@@ -28,5 +28,5 @@ export class DiningEntity implements Dining {
     restaurant: string;
 
     @Column({ type: 'int' })
-    unix_timestamp: number;
+    unixTimestamp: number;
 }

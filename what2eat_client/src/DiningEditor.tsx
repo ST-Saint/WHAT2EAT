@@ -1,26 +1,20 @@
-import NavigationBar from './NavigationBar';
+import { JRPCBody, JRPCRequest } from './RPC/JRPCRequest';
 import { Config } from './config';
-import { getUnixTimestamp } from './utils/time';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Modal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import dayjs, { Dayjs } from 'dayjs';
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
+import dayjs from 'dayjs';
+import React, { useEffect, useState } from 'react';
+import {
+    Controller,
+    SubmitHandler,
+    useForm,
+} from 'react-hook-form';
 import { v4 as UUID } from 'uuid';
 
 interface Dining {
@@ -62,11 +56,14 @@ const DiningEditor = () => {
     //     React.useState<Dayjs | null>(dayjs(jsDate));
 
     let [restaurants, setRestaurants] = useState([]);
+    let dining_id = '';
 
     const onSubmit: SubmitHandler<DiningForm> = async (
         dining,
     ) => {
-        console.log(dining);
+        let getDiningBody = JRPCBody('add_dining', dining);
+        let response = await JRPCRequest(getDiningBody);
+        dining_id = JSON.parse(response.result);
     };
 
     useEffect(() => {
@@ -107,78 +104,87 @@ const DiningEditor = () => {
                 margin-top: 5em;
             `}
         >
-            <Controller
-                name='restaurant'
-                control={control}
-                rules={{ required: true }}
-                render={({
-                    field: { onChange, value },
-                }) => (
-                    <Autocomplete
-                        freeSolo
-                        onChange={(event, value) => {
-                            onChange(value);
-                        }}
-                        onInputChange={(event, value) => {
-                            onChange(value);
-                        }}
-                        options={restaurants.map(
-                            (restaurant: any) =>
-                                restaurant.name,
-                        )}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label='Restaurant'
-                                InputProps={{
-                                    ...params.InputProps,
-                                    type: 'search',
+            <Stack spacing={2} sx={{ width: 600 }}>
+                <Controller
+                    name='restaurant'
+                    control={control}
+                    rules={{ required: true }}
+                    render={({
+                        field: { onChange, value },
+                    }) => (
+                        <Autocomplete
+                            freeSolo
+                            onChange={(event, value) => {
+                                onChange(value);
+                            }}
+                            onInputChange={(
+                                event,
+                                value,
+                            ) => {
+                                onChange(value);
+                            }}
+                            options={restaurants.map(
+                                (restaurant: any) =>
+                                    restaurant.name,
+                            )}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label='Restaurant'
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        type: 'search',
+                                    }}
+                                />
+                            )}
+                        />
+                    )}
+                />
+                <Controller
+                    name='unixTimestamp'
+                    control={control}
+                    rules={{ required: true }}
+                    defaultValue={Math.floor(
+                        Date.now() / 1000,
+                    )}
+                    render={({
+                        field: { onChange, value },
+                    }) => (
+                        <LocalizationProvider
+                            dateAdapter={AdapterDayjs}
+                        >
+                            <DateTimePicker
+                                views={[
+                                    'year',
+                                    'month',
+                                    'day',
+                                    'hours',
+                                    'minutes',
+                                    'seconds',
+                                ]}
+                                // value={dayjs(value)}
+                                defaultValue={dayjs(
+                                    Date.now(),
+                                )}
+                                onChange={(newValue) => {
+                                    if (newValue) {
+                                        if (
+                                            newValue.isValid()
+                                        ) {
+                                            onChange(
+                                                newValue.unix(),
+                                            );
+                                        }
+                                    }
                                 }}
                             />
-                        )}
-                    />
-                )}
-            />
-            <Controller
-                name='unixTimestamp'
-                control={control}
-                rules={{ required: true }}
-                defaultValue={Math.floor(Date.now() / 1000)}
-                render={({
-                    field: { onChange, value },
-                }) => (
-                    <LocalizationProvider
-                        dateAdapter={AdapterDayjs}
-                    >
-                        <DateTimePicker
-                            views={[
-                                'year',
-                                'month',
-                                'day',
-                                'hours',
-                                'minutes',
-                                'seconds',
-                            ]}
-                            // value={dayjs(value)}
-                            defaultValue={dayjs(Date.now())}
-                            onChange={(newValue) => {
-                                if (newValue) {
-                                    if (
-                                        newValue.isValid()
-                                    ) {
-                                        onChange(
-                                            newValue.unix(),
-                                        );
-                                    }
-                                }
-                            }}
-                        />
-                    </LocalizationProvider>
-                )}
-            />
-            <Button type='submit' variant='contained'>
-                Submit
-            </Button>
+                        </LocalizationProvider>
+                    )}
+                />
+                <Button type='submit' variant='contained'>
+                    Submit
+                </Button>
+            </Stack>
         </form>
     );
 };

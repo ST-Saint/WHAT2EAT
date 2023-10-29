@@ -7,6 +7,7 @@ import * as morgan from 'morgan';
 
 import { Migrate } from './migrate';
 import { AddReview } from './rpc/add-review';
+import { AddDining } from './rpc/add-dining';
 import { GetReviews } from './rpc/get-reviews';
 import { GetReviewers } from './rpc/get-reviewers';
 import { GetRestaurants } from './rpc/get-restaurants';
@@ -19,6 +20,7 @@ async function main() {
     // create a server
     const server = new jayson.Server({
         add_review: AddReview,
+        add_dining: AddDining,
         get_reviews: GetReviews,
         get_reviewers: GetReviewers,
         get_restaurants: GetRestaurants,
