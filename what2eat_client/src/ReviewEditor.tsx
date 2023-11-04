@@ -1,4 +1,5 @@
 import DiningEditor from './DiningEditor';
+import DishEditor from './DishEditor';
 import NavigationBar from './NavigationBar';
 import { JRPCRequest, JRPCBody } from './RPC/JRPCRequest';
 import { Config } from './config';
@@ -135,6 +136,7 @@ const ReviewEditor = () => {
         <>
             <NavigationBar />
             <DiningEditor />
+            <DishEditor />
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className={css`
