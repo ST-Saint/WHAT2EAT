@@ -6,6 +6,7 @@ import { json as jsonParser } from 'body-parser';
 import * as morgan from 'morgan';
 
 import { Migrate } from './migrate';
+import { AddDish, AddDishes } from './rpc/add-dish';
 import { AddReview } from './rpc/add-review';
 import { AddDining } from './rpc/add-dining';
 import { GetReviews } from './rpc/get-reviews';
@@ -19,6 +20,8 @@ async function main() {
 
     // create a server
     const server = new jayson.Server({
+        add_dish: AddDish,
+        add_dishes: AddDishes,
         add_review: AddReview,
         add_dining: AddDining,
         get_reviews: GetReviews,

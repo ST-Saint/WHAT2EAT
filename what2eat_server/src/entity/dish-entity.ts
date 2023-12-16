@@ -17,15 +17,15 @@ import {
 @Entity({ name: 'dish' })
 export class DishEntity implements Dish {
     @PrimaryColumn({ type: 'text' })
-    name: string;
-
-    @PrimaryColumn({ type: 'text' })
     @ManyToOne(
         () => RestaurantEntity,
         (restaurant: { name: string }) => restaurant.name,
     )
     @JoinColumn({ name: 'restaurant', referencedColumnName: 'name' })
     restaurant: string;
+
+    @PrimaryColumn({ type: 'text' })
+    name: string;
 
     @Column({ type: 'text', nullable: true })
     options: string | null;

@@ -1,4 +1,8 @@
-import { JRPCBody, JRPCRequest } from './RPC/JRPCRequest';
+import {
+    GetRestaurants,
+    JRPCBody,
+    JRPCRequest,
+} from './RPC/JRPCRequest';
 import { Config } from './config';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -17,21 +21,37 @@ import {
 } from 'react-hook-form';
 import { v4 as UUID } from 'uuid';
 
-interface Dish {
+interface IDish {
     dining: string;
     restaurant: string;
-    name: string[];
+    name: string;
 }
 
-class DishForm implements Dish {
+class Dish implements IDish {
     dining: string;
     restaurant: string;
-    name: string[];
+    name: string;
 
-    constructor(uuid: string, restaurant: string) {
-        this.dining = uuid;
+    constructor(
+        dining: string,
+        restaurant: string,
+        name: string,
+    ) {
+        this.dining = dining;
         this.restaurant = restaurant;
-        this.name = [];
+        this.name = name;
+    }
+}
+
+class DishForm {
+    dining: string;
+    dishes: string[];
+    restaurant: string;
+
+    constructor(dining: string, restaurant: string) {
+        this.dining = dining;
+        this.restaurant = restaurant;
+        this.dishes = [''];
     }
 }
 
@@ -43,7 +63,6 @@ const DishEditor = () => {
         watch,
         setValue,
         getValues,
-        formState: { errors },
     } = useForm<DishForm>();
 
     // const jsDate: number = Date.now();
@@ -52,44 +71,31 @@ const DishEditor = () => {
     //     React.useState<Dayjs | null>(dayjs(jsDate));
 
     let [restaurants, setRestaurants] = useState([]);
-    let dish_id = '';
 
     const onSubmit: SubmitHandler<DishForm> = async (
-        dish,
+        dishForm,
     ) => {
-        let getDishBody = JRPCBody('add_dish', dish);
-        let response = await JRPCRequest(getDishBody);
-        dish_id = JSON.parse(response.result);
+        console.log(dishForm);
+        for (let dish of dishForm.dishes) {
+            let addDishBody = JRPCBody(
+                'add_dish',
+                new Dish(
+                    dishForm.dining,
+                    dishForm.restaurant,
+                    dish,
+                ),
+            );
+            console.log(addDishBody);
+            let response = await JRPCRequest(addDishBody);
+            console.log(response);
+        }
     };
 
     useEffect(() => {
-        getRestaurants();
+        GetRestaurants((restaurants: any) => {
+            setRestaurants(restaurants.reverse());
+        });
     }, []);
-
-    const getRestaurants = async () => {
-        let jsonRPCBody: any = {
-            jsonrpc: '2.0',
-            method: 'get_restaurants',
-            params: {},
-            id: UUID(),
-        };
-        try {
-            let resp = await fetch(Config.serverIP, {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(jsonRPCBody),
-                headers: {
-                    'Content-Type':
-                        'application/json; charset=UTF-8',
-                },
-            });
-            setRestaurants(
-                JSON.parse((await resp.json()).result),
-            );
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const [inputValues, setInputValues] = useState(['']); // 存储输入框的值的数组
 
@@ -101,6 +107,7 @@ const DishEditor = () => {
         const updatedValues = [...inputValues];
         updatedValues[index] = value;
         setInputValues(updatedValues);
+        setValue('dishes', updatedValues);
 
         // 检查最后一个输入框是否有内容，如果有则新增一个空白输入框
         if (
@@ -145,7 +152,7 @@ const DishEditor = () => {
             >
                 <Stack spacing={2} sx={{ width: 600 }}>
                     <Controller
-                        name='dining'
+                        name='restaurant'
                         control={control}
                         rules={{ required: true }}
                         render={({
@@ -172,7 +179,7 @@ const DishEditor = () => {
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label='Dining record'
+                                        label='Restaurant'
                                         InputProps={{
                                             ...params.InputProps,
                                             type: 'search',

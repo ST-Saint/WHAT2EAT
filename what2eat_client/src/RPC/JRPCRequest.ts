@@ -22,3 +22,11 @@ export const JRPCRequest = async (jsonRPCBody: any) => {
     });
     return await response.json();
 };
+
+export const GetRestaurants = async (callback: Function) => {
+    let getReviewersBody = JRPCBody('get_restaurants');
+    let response = await JRPCRequest(getReviewersBody);
+    let restaurants: string[] = JSON.parse(response.result);
+    callback(restaurants);
+    return restaurants;
+};

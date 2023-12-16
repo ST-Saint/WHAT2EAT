@@ -1,7 +1,7 @@
 import DiningEditor from './DiningEditor';
 import DishEditor from './DishEditor';
 import NavigationBar from './NavigationBar';
-import { JRPCRequest, JRPCBody } from './RPC/JRPCRequest';
+import { JRPCRequest, JRPCBody, GetRestaurants } from './RPC/JRPCRequest';
 import { Config } from './config';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -72,7 +72,7 @@ const ReviewEditor = () => {
 
     useEffect(() => {
         getReviewers();
-        getRestaurants();
+        GetRestaurants((restaurants: any) => {setRestaurants(restaurants.reverse())});
     }, []);
 
     const getReviewers = async () => {
@@ -80,13 +80,6 @@ const ReviewEditor = () => {
         let response = await JRPCRequest(getReviewersBody);
         let reviewers = JSON.parse(response.result);
         setReviewers(reviewers);
-    };
-
-    const getRestaurants = async () => {
-        let getReviewersBody = JRPCBody('get_restaurants');
-        let response = await JRPCRequest(getReviewersBody);
-        let restaurants = JSON.parse(response.result);
-        setRestaurants(restaurants);
     };
 
     const handleOpen = () => {
@@ -231,43 +224,6 @@ const ReviewEditor = () => {
                     />
 
                     <Controller
-                        name='dish'
-                        control={control}
-                        render={({
-                            field: { onChange, value },
-                        }) => (
-                            <Autocomplete
-                                freeSolo
-                                onChange={(
-                                    event,
-                                    value,
-                                ) => {
-                                    onChange(value);
-                                }}
-                                onInputChange={(
-                                    event,
-                                    value,
-                                ) => {
-                                    onChange(value);
-                                }}
-                                options={dishes.map(
-                                    (dish) => dish,
-                                )}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label='Dish'
-                                        InputProps={{
-                                            ...params.InputProps,
-                                            type: 'search',
-                                        }}
-                                    />
-                                )}
-                            />
-                        )}
-                    />
-
-                    <Controller
                         name='score'
                         control={control}
                         rules={{ required: true }}
@@ -302,6 +258,43 @@ const ReviewEditor = () => {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                            />
+                        )}
+                    />
+
+                    <Controller
+                        name='dish'
+                        control={control}
+                        render={({
+                            field: { onChange, value },
+                        }) => (
+                            <Autocomplete
+                                freeSolo
+                                onChange={(
+                                    event,
+                                    value,
+                                ) => {
+                                    onChange(value);
+                                }}
+                                onInputChange={(
+                                    event,
+                                    value,
+                                ) => {
+                                    onChange(value);
+                                }}
+                                options={dishes.map(
+                                    (dish) => dish,
+                                )}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label='Dish'
+                                        InputProps={{
+                                            ...params.InputProps,
+                                            type: 'search',
+                                        }}
+                                    />
+                                )}
                             />
                         )}
                     />
