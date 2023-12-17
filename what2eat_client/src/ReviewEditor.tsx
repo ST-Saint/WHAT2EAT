@@ -1,5 +1,6 @@
 import DiningEditor from './DiningEditor';
 import DishEditor from './DishEditor';
+import { Dish } from './DishEditor';
 import NavigationBar from './NavigationBar';
 import {
     JRPCRequest,
@@ -7,7 +8,6 @@ import {
     GetRestaurants,
     GetDishes,
 } from './RPC/JRPCRequest';
-import {Dish} from "./DishEditor";
 import { Config } from './config';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -18,6 +18,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -30,13 +31,13 @@ import { v4 as UUID } from 'uuid';
 interface reviewForm {
     reviewer: string;
     restaurant: string;
-    dish: string;
     score: number;
+    dishes: string[];
+    scores: number[];
     comment: string;
     date: Date;
     uuid: string;
 }
-
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -60,7 +61,13 @@ const ReviewEditor = () => {
         setValue,
         getValues,
         formState: { errors },
-    } = useForm<reviewForm>();
+    } = useForm<reviewForm>({
+        defaultValues: {
+            dishes: [''],
+            score: 0,
+            scores: [0],
+        },
+    });
 
     let [confirmPopup, setConfirmPopup] = useState(false);
 
@@ -74,7 +81,138 @@ const ReviewEditor = () => {
         useState('');
     let [reviewers, setReviewers] = useState(['']);
     let [restaurants, setRestaurants] = useState(['']);
-    let [dishes, setDishes] = useState<Dish[]>([]);
+    let [candidateDishes, setCandidateDishes] = useState<
+        Dish[]
+    >([]);
+
+    const handleScoresChange = (
+        index: number,
+        value: string,
+    ) => {
+        const currentScores = getValues('scores');
+        let updatedScores = [...currentScores];
+        updatedScores[index] = parseInt(value);
+        setValue('scores', updatedScores);
+    };
+
+    const handleDishesChange = (
+        index: number,
+        value: string,
+    ) => {
+        const currentDishes = getValues('dishes');
+        const currentScores = getValues('scores');
+        let updatedDishes = [...currentDishes];
+        let updatedScores = [...currentScores];
+        updatedDishes[index] = value;
+        updatedScores[index] = 1;
+        setValue('dishes', updatedDishes);
+        if (
+            index === updatedDishes.length - 1 &&
+            value !== ''
+        ) {
+            updatedDishes.push('');
+            updatedScores.push(getValues('score') || 0);
+            setValue('dishes', updatedDishes);
+            setValue('scores', updatedScores);
+        } else if (index === updatedDishes.length - 2) {
+            let resized = false;
+            while (
+                index >= 0 &&
+                (updatedDishes[index] === null ||
+                    updatedDishes[index] === '')
+            ) {
+                resized = true;
+                updatedDishes.splice(index, 1);
+                updatedScores.splice(index, 1);
+                --index;
+            }
+            if (resized) {
+                setValue('dishes', updatedDishes);
+                setValue('scores', updatedScores);
+            }
+        }
+    };
+
+    let dishes = watch('dishes', ['']);
+    let scores = watch('scores', [0]);
+
+    let dishFields = (
+        <Grid container xs={12} item>
+            <Grid xs={9} item>
+                <Stack spacing={2}>
+                    {dishes.map((value, index) => (
+                        <Autocomplete
+                            freeSolo
+                            onChange={(event, value) => {
+                                // handleInputChange(index, value);
+                            }}
+                            key={index}
+                            value={value}
+                            onInputChange={(
+                                event,
+                                value,
+                            ) => {
+                                handleDishesChange(
+                                    index,
+                                    value,
+                                );
+                            }}
+                            options={candidateDishes.map(
+                                (candidateDishes: any) =>
+                                    candidateDishes.name,
+                            )}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label={`Dish ${
+                                        index + 1
+                                    }`}
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        type: 'search',
+                                    }}
+                                />
+                            )}
+                        />
+                    ))}
+                </Stack>
+            </Grid>
+            <Grid xs={3} item>
+                <Stack spacing={2}>
+                    {scores.map((value, index) => {
+                        return (
+                            <TextField
+                                label='Score'
+                                type='number'
+                                key={index}
+                                error={
+                                    isNaN(scores[index]) ||
+                                    scores[index] > 100
+                                }
+                                defaultValue={getValues(
+                                    'score',
+                                )}
+                                onChange={(
+                                    event: React.ChangeEvent<HTMLInputElement>,
+                                ) => {
+                                    handleScoresChange(
+                                        index,
+                                        event.target.value,
+                                    );
+                                }}
+                                inputProps={{
+                                    step: 0.1,
+                                }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        );
+                    })}
+                </Stack>
+            </Grid>
+        </Grid>
+    );
 
     useEffect(() => {
         getReviewers();
@@ -101,7 +239,7 @@ const ReviewEditor = () => {
 
     async function updateRestaurant(restaurant: string) {
         let restaurantDishes = await GetDishes(restaurant);
-        setDishes(restaurantDishes);
+        setCandidateDishes(restaurantDishes);
     }
 
     const onSubmit: SubmitHandler<reviewForm> = async (
@@ -152,8 +290,6 @@ const ReviewEditor = () => {
                 `}
             >
                 <Stack spacing={2} sx={{ width: 600 }}>
-                    {/* register your input into the hook by invoking the "register" function */}
-
                     <Controller
                         name='reviewer'
                         control={control}
@@ -275,43 +411,45 @@ const ReviewEditor = () => {
                             />
                         )}
                     />
-
-                    <Controller
-                        name='dish'
-                        control={control}
-                        render={({
-                            field: { onChange, value },
-                        }) => (
-                            <Autocomplete
-                                freeSolo
-                                onChange={(
-                                    event,
-                                    value,
-                                ) => {
-                                    onChange(value);
-                                }}
-                                onInputChange={(
-                                    event,
-                                    value,
-                                ) => {
-                                    onChange(value);
-                                }}
-                                options={dishes.map(
-                                    (dish) => dish.name,
-                                )}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label='Dish'
-                                        InputProps={{
-                                            ...params.InputProps,
-                                            type: 'search',
-                                        }}
-                                    />
-                                )}
-                            />
-                        )}
-                    />
+                    {dishFields}
+                    {
+                        // <Controller
+                        //     name='dishes'
+                        //     control={control}
+                        //     render={({
+                        //         field: { onChange, value },
+                        //     }) => (
+                        //         <Autocomplete
+                        //             freeSolo
+                        //             onChange={(
+                        //                 event,
+                        //                 value,
+                        //             ) => {
+                        //                 onChange(value);
+                        //             }}
+                        //             onInputChange={(
+                        //                 event,
+                        //                 value,
+                        //             ) => {
+                        //                 onChange(value);
+                        //             }}
+                        //             options={candidateDishes.map(
+                        //                 (dish) => dish.name,
+                        //             )}
+                        //             renderInput={(params) => (
+                        //                 <TextField
+                        //                     {...params}
+                        //                     label='Dish'
+                        //                     InputProps={{
+                        //                         ...params.InputProps,
+                        //                         type: 'search',
+                        //                     }}
+                        //                 />
+                        //             )}
+                        //         />
+                        //     )}
+                        // />
+                    }
 
                     <TextField
                         label='Comment'

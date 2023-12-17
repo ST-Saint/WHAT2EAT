@@ -63,7 +63,9 @@ const DishEditor = () => {
         watch,
         setValue,
         getValues,
-    } = useForm<DishForm>();
+    } = useForm<DishForm>({
+        defaultValues: { dishes: [''] },
+    });
 
     // const jsDate: number = Date.now();
 
@@ -75,7 +77,6 @@ const DishEditor = () => {
     const onSubmit: SubmitHandler<DishForm> = async (
         dishForm,
     ) => {
-        console.log(dishForm);
         for (let dish of dishForm.dishes) {
             let addDishBody = JRPCBody(
                 'add_dish',
@@ -85,9 +86,7 @@ const DishEditor = () => {
                     dish,
                 ),
             );
-            console.log(addDishBody);
             let response = await JRPCRequest(addDishBody);
-            console.log(response);
         }
     };
 
@@ -97,39 +96,35 @@ const DishEditor = () => {
         });
     }, []);
 
-    const [inputValues, setInputValues] = useState(['']); // 存储输入框的值的数组
-
-    // 当输入框的值发生变化时，检查最后一个输入框是否有内容，如果有则新增一个输入框
     const handleInputChange = (
         index: number,
         value: string,
     ) => {
-        const updatedValues = [...inputValues];
-        updatedValues[index] = value;
-        setInputValues(updatedValues);
-        setValue('dishes', updatedValues);
+        let currentDishes = getValues('dishes');
+        const updatedDishes = [...currentDishes];
+        updatedDishes[index] = value;
+        setValue('dishes', updatedDishes);
 
-        // 检查最后一个输入框是否有内容，如果有则新增一个空白输入框
         if (
-            index === inputValues.length - 1 &&
+            index === updatedDishes.length - 1 &&
             value !== ''
         ) {
-            updatedValues.push('');
-            setInputValues(updatedValues);
-        } else if (index === inputValues.length - 2) {
+            updatedDishes.push('');
+            setValue('dishes', updatedDishes);
+        } else if (index === updatedDishes.length - 2) {
             while (
                 index >= 0 &&
-                updatedValues[index] === ''
+                updatedDishes[index] === ''
             ) {
-                updatedValues.splice(index, 1);
+                updatedDishes.splice(index, 1);
                 --index;
             }
-            setInputValues(updatedValues);
+            setValue('dishes', updatedDishes);
         }
     };
 
-    // 渲染所有输入框
-    const inputFields = inputValues.map((value, index) => (
+    let dishes = watch('dishes', ['']);
+    let dishFields = dishes.map((value, index) => (
         <TextField
             key={index}
             label={`Dish ${index + 1}`}
@@ -139,7 +134,6 @@ const DishEditor = () => {
             }
         />
     ));
-
     return (
         <>
             <form
@@ -189,7 +183,7 @@ const DishEditor = () => {
                             />
                         )}
                     />
-                    {inputFields}
+                    {dishFields}
                     <Button
                         type='submit'
                         variant='contained'
