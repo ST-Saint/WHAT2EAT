@@ -27,7 +27,7 @@ interface IDish {
     name: string;
 }
 
-class Dish implements IDish {
+export class Dish implements IDish {
     dining: string;
     restaurant: string;
     name: string;

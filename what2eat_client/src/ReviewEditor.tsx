@@ -1,7 +1,13 @@
 import DiningEditor from './DiningEditor';
 import DishEditor from './DishEditor';
 import NavigationBar from './NavigationBar';
-import { JRPCRequest, JRPCBody, GetRestaurants } from './RPC/JRPCRequest';
+import {
+    JRPCRequest,
+    JRPCBody,
+    GetRestaurants,
+    GetDishes,
+} from './RPC/JRPCRequest';
+import {Dish} from "./DishEditor";
 import { Config } from './config';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -66,13 +72,15 @@ const ReviewEditor = () => {
 
     let [responseMessage, setResponseMessage] =
         useState('');
-    let [reviewers, setReviewers] = useState([]);
-    let [restaurants, setRestaurants] = useState([]);
-    let dishes: string[] = [];
+    let [reviewers, setReviewers] = useState(['']);
+    let [restaurants, setRestaurants] = useState(['']);
+    let [dishes, setDishes] = useState<Dish[]>([]);
 
     useEffect(() => {
         getReviewers();
-        GetRestaurants((restaurants: any) => {setRestaurants(restaurants.reverse())});
+        GetRestaurants((restaurants: any) => {
+            setRestaurants(restaurants.reverse());
+        });
     }, []);
 
     const getReviewers = async () => {
@@ -90,6 +98,11 @@ const ReviewEditor = () => {
             setConfirmPopup(false);
         }
     };
+
+    async function updateRestaurant(restaurant: string) {
+        let restaurantDishes = await GetDishes(restaurant);
+        setDishes(restaurantDishes);
+    }
 
     const onSubmit: SubmitHandler<reviewForm> = async (
         review,
@@ -203,6 +216,7 @@ const ReviewEditor = () => {
                                     event,
                                     value,
                                 ) => {
+                                    updateRestaurant(value);
                                     onChange(value);
                                 }}
                                 options={restaurants.map(
@@ -283,7 +297,7 @@ const ReviewEditor = () => {
                                     onChange(value);
                                 }}
                                 options={dishes.map(
-                                    (dish) => dish,
+                                    (dish) => dish.name,
                                 )}
                                 renderInput={(params) => (
                                     <TextField

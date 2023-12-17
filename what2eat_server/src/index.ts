@@ -9,6 +9,7 @@ import { Migrate } from './migrate';
 import { AddDish, AddDishes } from './rpc/add-dish';
 import { AddReview } from './rpc/add-review';
 import { AddDining } from './rpc/add-dining';
+import { GetDishes } from './rpc/get-dishes';
 import { GetReviews } from './rpc/get-reviews';
 import { GetReviewers } from './rpc/get-reviewers';
 import { GetRestaurants } from './rpc/get-restaurants';
@@ -24,6 +25,7 @@ async function main() {
         add_dishes: AddDishes,
         add_review: AddReview,
         add_dining: AddDining,
+        get_dishes: GetDishes,
         get_reviews: GetReviews,
         get_reviewers: GetReviewers,
         get_restaurants: GetRestaurants,
