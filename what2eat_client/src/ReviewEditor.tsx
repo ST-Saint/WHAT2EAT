@@ -104,7 +104,7 @@ const ReviewEditor = () => {
         let updatedDishes = [...currentDishes];
         let updatedScores = [...currentScores];
         updatedDishes[index] = value;
-        updatedScores[index] = 1;
+        updatedScores[index] = getValues('score');
         setValue('dishes', updatedDishes);
         if (
             index === updatedDishes.length - 1 &&
@@ -400,16 +400,15 @@ const ReviewEditor = () => {
                                     event: React.ChangeEvent<HTMLInputElement>,
                                 ) => {
                                     onChange(
-                                        event.target.value,
-                                    );
-                                    console.log(
-                                        getValues('scores'),
-                                        getValues('scores')
-                                            .length === 1,
+                                        parseInt(
+                                            event.target
+                                                .value,
+                                        ),
                                     );
                                     if (
-                                        getValues('scores')
-                                            .length == 1
+                                        dishes.length ===
+                                            1 &&
+                                        dishes[0] === ''
                                     ) {
                                         setValue('scores', [
                                             parseInt(
@@ -418,11 +417,6 @@ const ReviewEditor = () => {
                                             ),
                                         ]);
                                     }
-                                    console.log(
-                                        getValues('scores'),
-                                        getValues('scores')
-                                            .length === 1,
-                                    );
                                 }}
                                 inputProps={{
                                     step: 0.1,
