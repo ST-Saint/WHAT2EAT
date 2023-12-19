@@ -104,7 +104,6 @@ const ReviewEditor = () => {
         let updatedDishes = [...currentDishes];
         let updatedScores = [...currentScores];
         updatedDishes[index] = value;
-        updatedScores[index] = getValues('score');
         setValue('dishes', updatedDishes);
         if (
             index === updatedDishes.length - 1 &&
@@ -190,9 +189,6 @@ const ReviewEditor = () => {
                                     scores[index] > 100
                                 }
                                 value={value}
-                                defaultValue={getValues(
-                                    'score',
-                                )}
                                 onChange={(
                                     event: React.ChangeEvent<HTMLInputElement>,
                                 ) => {
