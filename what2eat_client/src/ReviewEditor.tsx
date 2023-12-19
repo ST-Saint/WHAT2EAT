@@ -189,6 +189,7 @@ const ReviewEditor = () => {
                                     isNaN(scores[index]) ||
                                     scores[index] > 100
                                 }
+                                value={value}
                                 defaultValue={getValues(
                                     'score',
                                 )}
@@ -401,6 +402,27 @@ const ReviewEditor = () => {
                                     onChange(
                                         event.target.value,
                                     );
+                                    console.log(
+                                        getValues('scores'),
+                                        getValues('scores')
+                                            .length === 1,
+                                    );
+                                    if (
+                                        getValues('scores')
+                                            .length == 1
+                                    ) {
+                                        setValue('scores', [
+                                            parseInt(
+                                                event.target
+                                                    .value,
+                                            ),
+                                        ]);
+                                    }
+                                    console.log(
+                                        getValues('scores'),
+                                        getValues('scores')
+                                            .length === 1,
+                                    );
                                 }}
                                 inputProps={{
                                     step: 0.1,
@@ -412,44 +434,6 @@ const ReviewEditor = () => {
                         )}
                     />
                     {dishFields}
-                    {
-                        // <Controller
-                        //     name='dishes'
-                        //     control={control}
-                        //     render={({
-                        //         field: { onChange, value },
-                        //     }) => (
-                        //         <Autocomplete
-                        //             freeSolo
-                        //             onChange={(
-                        //                 event,
-                        //                 value,
-                        //             ) => {
-                        //                 onChange(value);
-                        //             }}
-                        //             onInputChange={(
-                        //                 event,
-                        //                 value,
-                        //             ) => {
-                        //                 onChange(value);
-                        //             }}
-                        //             options={candidateDishes.map(
-                        //                 (dish) => dish.name,
-                        //             )}
-                        //             renderInput={(params) => (
-                        //                 <TextField
-                        //                     {...params}
-                        //                     label='Dish'
-                        //                     InputProps={{
-                        //                         ...params.InputProps,
-                        //                         type: 'search',
-                        //                     }}
-                        //                 />
-                        //             )}
-                        //         />
-                        //     )}
-                        // />
-                    }
 
                     <TextField
                         label='Comment'
