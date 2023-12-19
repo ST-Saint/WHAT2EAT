@@ -145,6 +145,7 @@ const DishEditor = () => {
                 `}
             >
                 <Stack spacing={2} sx={{ width: 600 }}>
+                    <h2>Dishes </h2>
                     <Controller
                         name='restaurant'
                         control={control}

@@ -96,96 +96,107 @@ const DiningEditor = () => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className={css`
-                display: flex;
-                justify-content: center;
-                margin-top: 5em;
-            `}
-        >
-            <Stack spacing={2} sx={{ width: 600 }}>
-                <Controller
-                    name='restaurant'
-                    control={control}
-                    rules={{ required: true }}
-                    render={({
-                        field: { onChange, value },
-                    }) => (
-                        <Autocomplete
-                            freeSolo
-                            onChange={(event, value) => {
-                                onChange(value);
-                            }}
-                            onInputChange={(
-                                event,
-                                value,
-                            ) => {
-                                onChange(value);
-                            }}
-                            options={restaurants.map(
-                                (restaurant: any) =>
-                                    restaurant.name,
-                            )}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label='Restaurant'
-                                    InputProps={{
-                                        ...params.InputProps,
-                                        type: 'search',
+        <>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className={css`
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 5em;
+                `}
+            >
+                <Stack spacing={2} sx={{ width: 600 }}>
+                    <h2>Dining </h2>
+                    <Controller
+                        name='restaurant'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({
+                            field: { onChange, value },
+                        }) => (
+                            <Autocomplete
+                                freeSolo
+                                onChange={(
+                                    event,
+                                    value,
+                                ) => {
+                                    onChange(value);
+                                }}
+                                onInputChange={(
+                                    event,
+                                    value,
+                                ) => {
+                                    onChange(value);
+                                }}
+                                options={restaurants.map(
+                                    (restaurant: any) =>
+                                        restaurant.name,
+                                )}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label='Restaurant'
+                                        InputProps={{
+                                            ...params.InputProps,
+                                            type: 'search',
+                                        }}
+                                    />
+                                )}
+                            />
+                        )}
+                    />
+                    <Controller
+                        name='unixTimestamp'
+                        control={control}
+                        rules={{ required: true }}
+                        defaultValue={Math.floor(
+                            Date.now() / 1000,
+                        )}
+                        render={({
+                            field: { onChange, value },
+                        }) => (
+                            <LocalizationProvider
+                                dateAdapter={AdapterDayjs}
+                            >
+                                <DateTimePicker
+                                    views={[
+                                        'year',
+                                        'month',
+                                        'day',
+                                        'hours',
+                                        'minutes',
+                                        'seconds',
+                                    ]}
+                                    // value={dayjs(value)}
+                                    defaultValue={dayjs(
+                                        Date.now(),
+                                    )}
+                                    onChange={(
+                                        newValue,
+                                    ) => {
+                                        if (newValue) {
+                                            if (
+                                                newValue.isValid()
+                                            ) {
+                                                onChange(
+                                                    newValue.unix(),
+                                                );
+                                            }
+                                        }
                                     }}
                                 />
-                            )}
-                        />
-                    )}
-                />
-                <Controller
-                    name='unixTimestamp'
-                    control={control}
-                    rules={{ required: true }}
-                    defaultValue={Math.floor(
-                        Date.now() / 1000,
-                    )}
-                    render={({
-                        field: { onChange, value },
-                    }) => (
-                        <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                        >
-                            <DateTimePicker
-                                views={[
-                                    'year',
-                                    'month',
-                                    'day',
-                                    'hours',
-                                    'minutes',
-                                    'seconds',
-                                ]}
-                                // value={dayjs(value)}
-                                defaultValue={dayjs(
-                                    Date.now(),
-                                )}
-                                onChange={(newValue) => {
-                                    if (newValue) {
-                                        if (
-                                            newValue.isValid()
-                                        ) {
-                                            onChange(
-                                                newValue.unix(),
-                                            );
-                                        }
-                                    }
-                                }}
-                            />
-                        </LocalizationProvider>
-                    )}
-                />
-                <Button type='submit' variant='contained'>
-                    Submit
-                </Button>
-            </Stack>
-        </form>
+                            </LocalizationProvider>
+                        )}
+                    />
+                    <Button
+                        type='submit'
+                        variant='contained'
+                    >
+                        Submit
+                    </Button>
+                </Stack>
+            </form>
+        </>
     );
 };
 export default DiningEditor;
