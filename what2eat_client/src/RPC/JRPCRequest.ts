@@ -1,6 +1,6 @@
+import { Dish, Dining } from '../DishEditor';
 import { Config } from '../config';
 import { v4 as UUID } from 'uuid';
-import {Dish} from "../DishEditor";
 
 export const JRPCBody = (method: string, params?: any) => {
     return {
@@ -27,18 +27,43 @@ export const JRPCRequest = async (jsonRPCBody: any) => {
 export const GetRestaurants = async (
     callback: Function,
 ) => {
-    let getReviewersBody = JRPCBody('get_restaurants');
-    let response = await JRPCRequest(getReviewersBody);
-    let restaurants: string[] = JSON.parse(response.result);
-    callback(restaurants);
-    return restaurants;
+    try {
+        let getReviewersBody = JRPCBody('get_restaurants');
+        let response = await JRPCRequest(getReviewersBody);
+        let restaurants: string[] = JSON.parse(
+            response.result,
+        );
+        callback(restaurants);
+        return restaurants;
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+};
+
+export const GetDinings = async (callback: Function) => {
+    try {
+        let getDiningBody = JRPCBody('get_dining');
+        let response = await JRPCRequest(getDiningBody);
+        let dining: Dining[] = JSON.parse(response.result);
+        callback(dining);
+        return dining;
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
 };
 
 export const GetDishes = async (restaurant: string) => {
-    let getReviewersBody = JRPCBody('get_dishes', {
-        restaurant: restaurant,
-    });
-    let response = await JRPCRequest(getReviewersBody);
-    let dishes: Dish[] = JSON.parse(response.result);
-    return dishes;
+    try {
+        let getReviewersBody = JRPCBody('get_dishes', {
+            restaurant: restaurant,
+        });
+        let response = await JRPCRequest(getReviewersBody);
+        let dishes: Dish[] = JSON.parse(response.result);
+        return dishes;
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
 };

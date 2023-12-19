@@ -1,5 +1,11 @@
-import { JRPCBody, JRPCRequest } from './RPC/JRPCRequest';
+import {
+    JRPCBody,
+    JRPCRequest,
+    GetRestaurants,
+    GetDishes,
+} from './RPC/JRPCRequest';
 import { Config } from './config';
+import { DiningProps } from './props';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
@@ -39,7 +45,7 @@ class DiningForm implements Dining {
     }
 }
 
-const DiningEditor = () => {
+const DiningEditor = ({ setDining }: DiningProps) => {
     const {
         register,
         control,
@@ -64,36 +70,12 @@ const DiningEditor = () => {
         let getDiningBody = JRPCBody('add_dining', dining);
         let response = await JRPCRequest(getDiningBody);
         dining_id = JSON.parse(response.result);
+        setDining(dining_id);
     };
 
     useEffect(() => {
-        getRestaurants();
+        GetRestaurants(setRestaurants);
     }, []);
-
-    const getRestaurants = async () => {
-        let jsonRPCBody: any = {
-            jsonrpc: '2.0',
-            method: 'get_restaurants',
-            params: {},
-            id: UUID(),
-        };
-        try {
-            let resp = await fetch(Config.serverIP, {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(jsonRPCBody),
-                headers: {
-                    'Content-Type':
-                        'application/json; charset=UTF-8',
-                },
-            });
-            setRestaurants(
-                JSON.parse((await resp.json()).result),
-            );
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     return (
         <>

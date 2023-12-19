@@ -4,6 +4,7 @@ import {
     JRPCRequest,
 } from './RPC/JRPCRequest';
 import { Config } from './config';
+import { DiningProps } from './props';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
@@ -25,6 +26,27 @@ interface IDish {
     dining: string;
     restaurant: string;
     name: string;
+}
+
+interface IDining {
+    uuid: string;
+    unixTimestamp: number;
+    restaurant: string;
+}
+
+export class Dining implements IDining {
+    uuid: string;
+    unixTimestamp: number;
+    restaurant: string;
+    constructor(
+        uuid: string,
+        unixTimestamp: number,
+        restaurant: string,
+    ) {
+        this.uuid = uuid;
+        this.unixTimestamp = unixTimestamp;
+        this.restaurant = restaurant;
+    }
 }
 
 export class Dish implements IDish {

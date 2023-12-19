@@ -1,11 +1,12 @@
 import DiningEditor from './DiningEditor';
 import DishEditor from './DishEditor';
-import { Dish } from './DishEditor';
+import { Dish, Dining } from './DishEditor';
 import NavigationBar from './NavigationBar';
 import {
     JRPCRequest,
     JRPCBody,
     GetRestaurants,
+    GetDinings,
     GetDishes,
 } from './RPC/JRPCRequest';
 import { Config } from './config';
@@ -22,6 +23,7 @@ import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -29,6 +31,7 @@ import { Controller } from 'react-hook-form';
 import { v4 as UUID } from 'uuid';
 
 interface reviewForm {
+    dining: string;
     reviewer: string;
     restaurant: string;
     score: number;
@@ -38,6 +41,7 @@ interface reviewForm {
     date: Date;
     uuid: string;
 }
+
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -66,6 +70,7 @@ const ReviewEditor = () => {
             dishes: [''],
             score: 0,
             scores: [0],
+            restaurant: '',
         },
     });
 
@@ -81,6 +86,7 @@ const ReviewEditor = () => {
         useState('');
     let [reviewers, setReviewers] = useState(['']);
     let [restaurants, setRestaurants] = useState(['']);
+    let [dinings, setDinings] = useState<Dining[]>([]);
     let [candidateDishes, setCandidateDishes] = useState<
         Dish[]
     >([]);
@@ -198,7 +204,7 @@ const ReviewEditor = () => {
                                     );
                                 }}
                                 inputProps={{
-                                    step: 0.1,
+                                    step: 1,
                                 }}
                                 InputLabelProps={{
                                     shrink: true,
@@ -211,18 +217,33 @@ const ReviewEditor = () => {
         </Grid>
     );
 
-    useEffect(() => {
-        getReviewers();
-        GetRestaurants((restaurants: any) => {
-            setRestaurants(restaurants.reverse());
-        });
-    }, []);
-
     const getReviewers = async () => {
         let getReviewersBody = JRPCBody('get_reviewers');
         let response = await JRPCRequest(getReviewersBody);
         let reviewers = JSON.parse(response.result);
         setReviewers(reviewers);
+    };
+
+    useEffect(() => {
+        getReviewers();
+        GetDinings((dining: any) => {
+            setDinings(dining.reverse());
+        });
+        GetRestaurants((restaurants: any) => {
+            setRestaurants(restaurants.reverse());
+        });
+    }, []);
+
+    const getScoresAverage = () => {
+        let res = 0,
+            cnt = 0;
+        for (let val of scores) {
+            if (!isNaN(val)) {
+                res += val;
+                ++cnt;
+            }
+        }
+        return res / cnt;
     };
 
     const handleOpen = () => {
@@ -234,7 +255,11 @@ const ReviewEditor = () => {
         }
     };
 
-    async function updateRestaurant(restaurant: string) {
+    async function updateRestaurant(
+        dining_restaurant: string,
+    ) {
+        let restaurant = dining_restaurant.split(' | ')[0];
+        setValue('restaurant', restaurant);
         let restaurantDishes = await GetDishes(restaurant);
         setCandidateDishes(restaurantDishes);
     }
@@ -243,6 +268,7 @@ const ReviewEditor = () => {
         review,
     ) => {
         handleOpen();
+
         review.date = new Date();
         review.uuid = UUID();
         let addReviewBody: any = JRPCBody(
@@ -276,7 +302,11 @@ const ReviewEditor = () => {
     return (
         <>
             <NavigationBar />
-            <DiningEditor />
+            <DiningEditor
+                setDining={(value: string) => {
+                    setValue('dining', value);
+                }}
+            />
             <DishEditor />
             <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -332,7 +362,7 @@ const ReviewEditor = () => {
                     />
 
                     <Controller
-                        name='restaurant'
+                        name='dining'
                         control={control}
                         rules={{ required: true }}
                         render={({
@@ -353,20 +383,43 @@ const ReviewEditor = () => {
                                     updateRestaurant(value);
                                     onChange(value);
                                 }}
-                                options={restaurants.map(
-                                    (restaurant: any) =>
-                                        restaurant.name,
+                                options={dinings.map(
+                                    (dining: any) =>
+                                        dining.restaurant +
+                                        ' | ' +
+                                        dayjs
+                                            .unix(
+                                                dining.unixTimestamp,
+                                            )
+                                            .format(
+                                                'YYYY-MM-DD HH:MM',
+                                            ),
                                 )}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
-                                        label='Restaurant'
+                                        label='Dining'
                                         InputProps={{
                                             ...params.InputProps,
                                             type: 'search',
                                         }}
                                     />
                                 )}
+                            />
+                        )}
+                    />
+
+                    <Controller
+                        name='restaurant'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({
+                            field: { onChange, value },
+                        }) => (
+                            <TextField
+                                disabled
+                                label='Restaurant'
+                                value={value}
                             />
                         )}
                     />
@@ -380,7 +433,7 @@ const ReviewEditor = () => {
                             field: { onChange, value },
                         }) => (
                             <TextField
-                                label='Score'
+                                label='Restaurant Score'
                                 type='number'
                                 defaultValue={0}
                                 error={
@@ -391,7 +444,8 @@ const ReviewEditor = () => {
                                     isNaN(value) ||
                                     value > 100
                                         ? 'Score must be <= 100'
-                                        : ''
+                                        : 'Avg:' +
+                                          getScoresAverage()
                                 }
                                 onChange={(
                                     event: React.ChangeEvent<HTMLInputElement>,
@@ -416,7 +470,7 @@ const ReviewEditor = () => {
                                     }
                                 }}
                                 inputProps={{
-                                    step: 0.1,
+                                    step: 1,
                                 }}
                                 InputLabelProps={{
                                     shrink: true,
