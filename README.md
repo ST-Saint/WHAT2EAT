@@ -1,5 +1,5 @@
 # WHAT2EAT
-<img src="WHAT2EAT.png" height="400"/>
+<img src="WHAT2EAT.png" height="800"/>
 
 [web](http://176.122.188.70:3000)
 
