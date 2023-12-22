@@ -1,7 +1,7 @@
 # WHAT2EAT
-<img src="what2eat_webapp/what2eat_client/src/WHAT2EAT.png" height="400"/>
+<img src="WHAT2EAT.png" height="400"/>
 
-[web](http://128.189.17.124:3000)
+[web](http://176.122.188.70:3000)
 
 ## [Review](./what2eat_webapp/what2eat_server/data/reviews.md)
 
