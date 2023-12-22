@@ -45,7 +45,7 @@ const style = {
     top: '15%',
     left: '50%',
     transform: 'translate(-50%, 0%)',
-    width: 1000,
+    width: "100%",
     bgcolor: 'background.paper',
     borderColor: 'primary.main',
     // border: '1px solid #3399ff',
