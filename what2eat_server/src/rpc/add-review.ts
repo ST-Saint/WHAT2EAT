@@ -18,25 +18,17 @@ export const AddReview = async (
 ) => {
     console.log(review);
 
-    let restaurant: RestaurantEntity = new RestaurantEntity();
+    let restaurant: RestaurantEntity =
+        new RestaurantEntity();
     restaurant.name = review.restaurant;
     await RestaurantRepo.upsert(restaurant, ['name']);
-    let dishEntity: DishEntity = new DishEntity();
-    let dishes: string[];
-    if (review.dish.startsWith('[')) {
-        dishes = review.dish
-            .substr(1, dishes[2].length - 2)
-            .split(',')
-            .map((str) => str.trim());
-    } else {
-        dishes = [review.dish];
-    }
+    // let dishEntity: DishEntity = new DishEntity();
 
-    dishEntity.restaurant = review.restaurant;
-    for (let dish of dishes) {
-        dishEntity.name = dish;
-        await DishRepo.upsert(dishEntity, ['name', 'restaurant']);
-    }
+    // dishEntity.restaurant = review.restaurant;
+    // for (let dish of dishes) {
+    //     dishEntity.name = dish;
+    //     await DishRepo.upsert(dishEntity, ['name', 'restaurant']);
+    // }
 
     let ret = ReviewRepo.save(review);
     console.log(ret);

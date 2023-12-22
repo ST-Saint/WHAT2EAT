@@ -42,18 +42,6 @@ export class ReviewEntity implements Review {
     ])
     restaurant: string;
 
-    @Column({ type: 'text', nullable: true })
-    @ManyToMany(
-        () => DishEntity,
-        (restaurant: { name: string }) => restaurant.name,
-        { nullable: true },
-    )
-    @JoinColumn([
-        { name: 'dish', referencedColumnName: 'name' },
-        // { name: 'restaurant', referencedColumnName: 'restaurant' },
-    ])
-    dish: string | null;
-
     @Column({ type: 'text' })
     comment: string;
 

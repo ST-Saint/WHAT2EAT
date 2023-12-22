@@ -1,5 +1,4 @@
 import { AppDataSource } from './data-source';
-import { User } from './entity/User';
 import { ReviewEntity } from './entity/review-entity';
 import { ReviewerEntity } from './entity/reviewer-entity';
 import { RestaurantEntity } from './entity/restaurant-entity';

@@ -14,8 +14,7 @@ import { GetDinings } from './rpc/get-dinings';
 import { GetReviews } from './rpc/get-reviews';
 import { GetReviewers } from './rpc/get-reviewers';
 import { GetRestaurants } from './rpc/get-restaurants';
-
-
+import { SubmitReviewForm } from './rpc/submit-review-form';
 
 async function main() {
     const app = connect();
@@ -31,6 +30,7 @@ async function main() {
         get_reviews: GetReviews,
         get_reviewers: GetReviewers,
         get_restaurants: GetRestaurants,
+        submit_review_form: SubmitReviewForm,
     });
 
     await AppDataSource.initialize();

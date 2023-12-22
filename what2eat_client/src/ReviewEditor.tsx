@@ -32,6 +32,7 @@ import { v4 as UUID } from 'uuid';
 
 interface reviewForm {
     dining: string;
+    diningRestaurant: string;
     reviewer: string;
     restaurant: string;
     score: number;
@@ -97,7 +98,9 @@ const ReviewEditor = () => {
     ) => {
         const currentScores = getValues('scores');
         let updatedScores = [...currentScores];
-        updatedScores[index] = parseInt(value);
+        updatedScores[index] = isNaN(value as any)
+            ? 0
+            : parseFloat(value);
         setValue('scores', updatedScores);
     };
 
@@ -140,6 +143,7 @@ const ReviewEditor = () => {
 
     let dishes = watch('dishes', ['']);
     let scores = watch('scores', [0]);
+    let reviewer = watch('reviewer', '');
 
     let dishFields = (
         <Grid container xs={12} item>
@@ -204,7 +208,7 @@ const ReviewEditor = () => {
                                     );
                                 }}
                                 inputProps={{
-                                    step: 1,
+                                    step: 'any',
                                 }}
                                 InputLabelProps={{
                                     shrink: true,
@@ -262,6 +266,12 @@ const ReviewEditor = () => {
         setValue('restaurant', restaurant);
         let restaurantDishes = await GetDishes(restaurant);
         setCandidateDishes(restaurantDishes);
+
+        let dining_id = dining_restaurant
+            .split(' | ')
+            .pop();
+        setValue('dining', dining_id || '');
+        console.log(getValues('dining'));
     }
 
     const onSubmit: SubmitHandler<reviewForm> = async (
@@ -272,7 +282,7 @@ const ReviewEditor = () => {
         review.date = new Date();
         review.uuid = UUID();
         let addReviewBody: any = JRPCBody(
-            'add_review',
+            'submit_review_form',
             review,
         );
         // console.log(review);
@@ -362,7 +372,7 @@ const ReviewEditor = () => {
                     />
 
                     <Controller
-                        name='dining'
+                        name='diningRestaurant'
                         control={control}
                         rules={{ required: true }}
                         render={({
@@ -393,7 +403,9 @@ const ReviewEditor = () => {
                                             )
                                             .format(
                                                 'YYYY-MM-DD HH:MM',
-                                            ),
+                                            ) +
+                                        ' | ' +
+                                        dining.uuid,
                                 )}
                                 renderInput={(params) => (
                                     <TextField
@@ -440,6 +452,9 @@ const ReviewEditor = () => {
                                     isNaN(value) ||
                                     value > 100
                                 }
+                                inputProps={{
+                                    step: "any",
+                                }}
                                 helperText={
                                     isNaN(value) ||
                                     value > 100
@@ -450,27 +465,35 @@ const ReviewEditor = () => {
                                 onChange={(
                                     event: React.ChangeEvent<HTMLInputElement>,
                                 ) => {
-                                    onChange(
-                                        parseInt(
-                                            event.target
-                                                .value,
-                                        ),
-                                    );
+                                    let numeric = isNaN(
+                                        event.target
+                                            .value as any,
+                                    )
+                                        ? 0
+                                        : parseFloat(
+                                              event.target
+                                                  .value,
+                                          );
+                                    onChange(numeric);
                                     if (
-                                        dishes.length ===
+                                        (dishes.length ===
                                             1 &&
-                                        dishes[0] === ''
+                                            dishes[0] ===
+                                                '') ||
+                                        reviewer === ''
                                     ) {
-                                        setValue('scores', [
-                                            parseInt(
-                                                event.target
-                                                    .value,
+                                        setValue(
+                                            'scores',
+                                            [
+                                                ...Array(
+                                                    dishes.length,
+                                                ).keys(),
+                                            ].map(
+                                                (i) =>
+                                                    numeric,
                                             ),
-                                        ]);
+                                        );
                                     }
-                                }}
-                                inputProps={{
-                                    step: 1,
                                 }}
                                 InputLabelProps={{
                                     shrink: true,
