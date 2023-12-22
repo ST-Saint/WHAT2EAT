@@ -46,7 +46,6 @@ export const Migrate = async () => {
 
                 review.restaurant = ele[0];
                 review.reviewer = ele[1];
-                review.dish = ele[2];
 
                 review.score = Number(ele[3]);
                 review.comment = ele[4];
