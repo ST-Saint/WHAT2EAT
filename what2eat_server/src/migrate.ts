@@ -103,10 +103,10 @@ export const Migrate = async () => {
                     console.log(dishes);
                     // review.dish = dishes;
                     // tryInsertReview(review);
-                    for (let dish of dishes) {
-                        review.dish = dish;
-                        tryInsertReview(review);
-                    }
+                    // for (let dish of dishes) {
+                    //     review.dish = dish;
+                    //     tryInsertReview(review);
+                    // }
                 } else {
                     tryInsertReview(review);
                 }
