@@ -1,4 +1,6 @@
 import NavigationBar from './NavigationBar';
+import { JRPCRequest, JRPCBody } from './RPC/JRPCRequest';
+import { Config } from './config';
 import { css } from '@emotion/css';
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
@@ -57,27 +59,15 @@ const ExpenseEditor = () => {
     // number: http status code
     let [response, setResponse] = useState(0);
 
-    let [responseMessage, setResponseMessage] = useState('');
+    let [responseMessage, setResponseMessage] =
+        useState('');
     let [restaurants, setRestaurants] = useState([]);
 
     const getRestaurants = async () => {
-        let jsonRPCBody: any = {
-            jsonrpc: '2.0',
-            method: 'get_restaurants',
-            params: {},
-            id: UUID(),
-        };
-        try {
-            let resp = await fetch('http://128.189.17.124:5000', {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(jsonRPCBody),
-                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-            });
-            setRestaurants((await resp.json()).result);
-        } catch (error) {
-            console.log(error);
-        }
+        let getReviewersBody = JRPCBody('get_restaurants');
+        let response = await JRPCRequest(getReviewersBody);
+        let restaurants = JSON.parse(response.result);
+        setRestaurants(restaurants);
     };
 
     useEffect(() => {
@@ -93,7 +83,9 @@ const ExpenseEditor = () => {
         }
     };
 
-    const onSubmit: SubmitHandler<expenseForm> = async (expense) => {
+    const onSubmit: SubmitHandler<expenseForm> = async (
+        expense,
+    ) => {
         handleOpen();
         expense.date = new Date();
         let jsonRPCBody: any = {
@@ -107,18 +99,23 @@ const ExpenseEditor = () => {
         setResponse(0);
         setResponseMessage('...');
         try {
-            response = await fetch('http://128.189.17.124:5000', {
+            response = await fetch(Config.serverIP, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
-                headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+                headers: {
+                    'Content-Type':
+                        'application/json; charset=UTF-8',
+                },
             });
             if (response != null && !response.ok) {
                 /* Handle */
             }
             setResponse(response.status);
             // console.log(response.body);
-            setResponseMessage((await response.json()).result);
+            setResponseMessage(
+                (await response.json()).result,
+            );
         } catch (error: any) {
             setResponse(-1);
             if (typeof error.message === 'string') {
@@ -148,17 +145,26 @@ const ExpenseEditor = () => {
                         name='restaurant'
                         control={control}
                         rules={{ required: true }}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                            field: { onChange, value },
+                        }) => (
                             <Autocomplete
                                 freeSolo
-                                onChange={(event, value) => {
+                                onChange={(
+                                    event,
+                                    value,
+                                ) => {
                                     onChange(value);
                                 }}
-                                onInputChange={(event, value) => {
+                                onInputChange={(
+                                    event,
+                                    value,
+                                ) => {
                                     onChange(value);
                                 }}
                                 options={restaurants.map(
-                                    (restaurant) => restaurant,
+                                    (restaurant: any) =>
+                                        restaurant.name,
                                 )}
                                 renderInput={(params) => (
                                     <TextField
@@ -179,21 +185,29 @@ const ExpenseEditor = () => {
                         control={control}
                         rules={{ required: true }}
                         defaultValue={1}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                            field: { onChange, value },
+                        }) => (
                             <TextField
                                 label='Number of People'
                                 type='number'
                                 defaultValue={1}
-                                error={isNaN(value) || value < 1}
+                                error={
+                                    isNaN(value) ||
+                                    value < 1
+                                }
                                 helperText={
-                                    isNaN(value) || value < 1
+                                    isNaN(value) ||
+                                    value < 1
                                         ? 'Score must be <= 100'
                                         : ''
                                 }
                                 onChange={(
                                     event: React.ChangeEvent<HTMLInputElement>,
                                 ) => {
-                                    onChange(event.target.value);
+                                    onChange(
+                                        event.target.value,
+                                    );
                                 }}
                                 InputLabelProps={{
                                     shrink: true,
@@ -206,7 +220,9 @@ const ExpenseEditor = () => {
                         control={control}
                         rules={{ required: true }}
                         defaultValue={0}
-                        render={({ field: { onChange, value } }) => (
+                        render={({
+                            field: { onChange, value },
+                        }) => (
                             <TextField
                                 label='Expense'
                                 type='number'
@@ -214,7 +230,9 @@ const ExpenseEditor = () => {
                                 onChange={(
                                     event: React.ChangeEvent<HTMLInputElement>,
                                 ) => {
-                                    onChange(event.target.value);
+                                    onChange(
+                                        event.target.value,
+                                    );
                                 }}
                                 inputProps={{
                                     step: 0.1,
@@ -226,8 +244,13 @@ const ExpenseEditor = () => {
                         )}
                     />
 
-                    {errors.restaurant && <p>Restaurant is required</p>}
-                    <Button type='submit' variant='contained'>
+                    {errors.restaurant && (
+                        <p>Restaurant is required</p>
+                    )}
+                    <Button
+                        type='submit'
+                        variant='contained'
+                    >
                         Submit
                     </Button>
                 </Stack>
@@ -240,9 +263,16 @@ const ExpenseEditor = () => {
                 aria-describedby='child-modal-description'
             >
                 <Box sx={{ ...style }}>
-                    <h2 id='child-modal-title'>Sumbmit Sent</h2>
-                    <p id='child-modal-description'>{responseMessage}</p>
-                    <Button variant='contained' onClick={handleClose}>
+                    <h2 id='child-modal-title'>
+                        Sumbmit Sent
+                    </h2>
+                    <p id='child-modal-description'>
+                        {responseMessage}
+                    </p>
+                    <Button
+                        variant='contained'
+                        onClick={handleClose}
+                    >
                         Close
                     </Button>
                 </Box>

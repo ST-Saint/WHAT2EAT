@@ -18,6 +18,7 @@ import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { v4 as UUID } from 'uuid';
+import { Config } from './config';
 
 interface Data {
     uuid: string;
@@ -26,7 +27,7 @@ interface Data {
     dish: string;
     score: number;
     comment: string;
-    date: Date;
+    createdAt: Date;
 }
 
 interface TablePaginationActionsProps {
@@ -150,15 +151,16 @@ const ReviewTable = () => {
             id: UUID(),
         };
         try {
-            let resp = await fetch('http://128.189.17.124:5000', {
+            let resp = await fetch(Config.serverIP, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(jsonRPCBody),
                 headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             });
             let result = (await resp.json()).result;
-            result.reverse();
-            setReviews(result);
+            let reviews = JSON.parse(result);
+            reviews.reverse();
+            setReviews(reviews);
         } catch (error) {
             console.log(error);
         }
@@ -230,7 +232,7 @@ const ReviewTable = () => {
                                     {review.comment}
                                 </TableCell>
                                 <TableCell align='center'>
-                                    {review.date.toString()}
+                                    {review.createdAt.toString()}
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { css } from '@emotion/css';
 
 const router = createBrowserRouter([
     {
@@ -39,6 +40,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <RouterProvider router={router} />
+        <footer className={css`margin-bottom: 5%`} />
     </React.StrictMode>,
 );
 
