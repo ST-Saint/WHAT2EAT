@@ -100,15 +100,19 @@ const DishEditor = () => {
         dishForm,
     ) => {
         for (let dish of dishForm.dishes) {
-            let addDishBody = JRPCBody(
-                'add_dish',
-                new Dish(
-                    dishForm.dining,
-                    dishForm.restaurant,
-                    dish,
-                ),
-            );
-            let response = await JRPCRequest(addDishBody);
+            if (dish != '') {
+                let addDishBody = JRPCBody(
+                    'add_dish',
+                    new Dish(
+                        dishForm.dining,
+                        dishForm.restaurant,
+                        dish,
+                    ),
+                );
+                let response = await JRPCRequest(
+                    addDishBody,
+                );
+            }
         }
     };
 
