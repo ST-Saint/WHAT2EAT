@@ -181,4 +181,5 @@ const DiningEditor = ({ setDining }: DiningProps) => {
         </>
     );
 };
+
 export default DiningEditor;

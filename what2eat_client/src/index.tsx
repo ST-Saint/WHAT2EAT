@@ -9,6 +9,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { css } from '@emotion/css';
+import Dining from "./Dining";
 
 const router = createBrowserRouter([
     {
@@ -24,14 +25,17 @@ const router = createBrowserRouter([
         element: <ReviewEditor />,
     },
     {
-        path: '/expenseeditor',
-        element: <ExpenseEditor />,
+        path: 'dining',
+        element: <Dining />,
     },
+    // {
+    //     path: '/expenseeditor',
+    //     element: <ExpenseEditor />,
+    // },
     {
         path: '/reviewtable',
         element: <ReviewTable />,
     },
-    // TODO(display table): add new router
 ]);
 
 const root = ReactDOM.createRoot(

@@ -10,10 +10,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 
-const pages: string[] = ['Home', 'Reviews', 'Edits'];
+const pages: string[] = ['Home', 'Reviews', 'Dining', 'Edits'];
 const ref: string[] = [
     '/',
     '/reviewtable',
+    "/dining",
     '/revieweditor',
 ];
 

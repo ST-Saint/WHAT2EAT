@@ -312,12 +312,6 @@ const ReviewEditor = () => {
     return (
         <>
             <NavigationBar />
-            <DiningEditor
-                setDining={(value: string) => {
-                    setValue('dining', value);
-                }}
-            />
-            <DishEditor />
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className={css`
