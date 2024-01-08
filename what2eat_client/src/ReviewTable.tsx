@@ -17,6 +17,7 @@ import TableFooter from '@mui/material/TableFooter';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useState, useEffect } from 'react';
@@ -29,6 +30,16 @@ interface Data {
     score: number;
     comment: string;
     createdAt: Date;
+}
+
+interface iReview {
+    dining: string;
+    reviewer: string;
+    restaurant: string;
+    score: number;
+    comment: string;
+    createdAt: Date;
+    uuid: string;
 }
 
 interface TablePaginationActionsProps {
@@ -55,7 +66,7 @@ function Chapters({ value }: { value: string }) {
 
 const style = {
     position: 'absolute' as 'absolute',
-    top: '15%',
+    // top: '15%',
     left: '50%',
     transform: 'translate(-50%, 0%)',
     width: '100%',
@@ -164,6 +175,9 @@ const ReviewTable = () => {
     const [rowsPerPage, setRowsPerPage] =
         React.useState(10);
     let [reviews, setReviews] = useState([]);
+    let [filter, setFilter] = React.useState('');
+    let [filteredReviews, setFilteredReviews] =
+        React.useState<iReview[]>([]);
 
     useEffect(() => {
         getReviews();
@@ -190,6 +204,7 @@ const ReviewTable = () => {
             let reviews = JSON.parse(result);
             reviews.reverse();
             setReviews(reviews);
+            setFilteredReviews(reviews);
         } catch (error) {
             console.log(error);
         }
@@ -201,6 +216,7 @@ const ReviewTable = () => {
     ) => {
         setPage(newPage);
     };
+
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -213,20 +229,63 @@ const ReviewTable = () => {
         page > 0
             ? Math.max(
                   0,
-                  (1 + page) * rowsPerPage - reviews.length,
+                  (1 + page) * rowsPerPage -
+                      filteredReviews.length,
               )
             : 0;
 
     const visibleRows = React.useMemo(() => {
-        return reviews.slice(
+        return filteredReviews.slice(
             page * rowsPerPage,
             page * rowsPerPage + rowsPerPage,
         );
-    }, [page, rowsPerPage, reviews]);
+    }, [page, rowsPerPage, filteredReviews]);
+
+    function reviewToString(review: iReview) {
+        return [
+            review.reviewer,
+            review.restaurant,
+            review.comment,
+            review.score,
+            review.createdAt,
+        ].join('\n');
+    }
 
     return (
         <>
             <NavigationBar />
+            <TextField
+                fullWidth
+                label='Search Field'
+                id='Search Field'
+                margin='normal'
+                value={filter}
+                onChange={(
+                    event: React.ChangeEvent<HTMLInputElement>,
+                ) => {
+                    let filter = event.target.value;
+                    setFilter(filter);
+                    if (filter != '') {
+                        const filterReg = new RegExp(
+                            filter,
+                            'i',
+                        );
+                        let fReviews = reviews.filter(
+                            (review: iReview) => {
+                                return (
+                                    reviewToString(
+                                        review,
+                                    ).search(filterReg) !=
+                                    -1
+                                );
+                            },
+                        );
+                        setFilteredReviews(fReviews);
+                    } else {
+                        setFilteredReviews(reviews);
+                    }
+                }}
+            />
             <TableContainer component={Paper} sx={style}>
                 <Table
                     sx={{ minWidth: 600 }}
@@ -308,7 +367,7 @@ const ReviewTable = () => {
                         display: 'flex',
                         width: 999,
                     }}
-                    count={reviews.length}
+                    count={filteredReviews.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
