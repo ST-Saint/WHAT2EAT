@@ -1,6 +1,6 @@
-import NavigationBar from './NavigationBar';
 import DiningEditor from './DiningEditor';
 import DishEditor from './DishEditor';
+import NavigationBar from './NavigationBar';
 
 const Dining = () => {
     return (
@@ -13,7 +13,7 @@ const Dining = () => {
             />
             <DishEditor />
         </>
-    )
-}
+    );
+};
 
 export default Dining;
