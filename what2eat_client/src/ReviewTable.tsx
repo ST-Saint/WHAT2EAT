@@ -5,6 +5,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -18,10 +19,17 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { v4 as UUID } from 'uuid';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface Data {
     uuid: string;
@@ -70,6 +78,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, 0%)',
     width: '100%',
+    minWidth: '800px',
     bgcolor: 'background.paper',
     borderColor: 'primary.main',
     // border: '1px solid #3399ff',
@@ -169,6 +178,79 @@ function TablePaginationActions(
         </Box>
     );
 }
+
+const ReviewRow = (props: { review: Data }) => {
+    const { review } = props;
+    const [open, setOpen] = React.useState(false);
+    return (
+        <React.Fragment>
+            <TableRow
+                key={review.uuid}
+                sx={{
+                    '&:last-child td, &:last-child th': {
+                        border: 0,
+                    },
+                }}
+                onClick={() => setOpen(!open)}
+            >
+                <TableCell
+                    component='th'
+                    scope='row'
+                    align='left'
+                >
+                    {review.restaurant}
+                </TableCell>
+                <TableCell align='center'>
+                    {review.reviewer}
+                </TableCell>
+                <TableCell align='center'>
+                    {review.score}
+                </TableCell>
+                <TableCell align='center'>
+                    {dayjs(review.createdAt)
+                        .tz('America/Vancouver')
+                        .format('YYYY-MM-DD HH:MM')}
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell
+                    style={{
+                        paddingBottom: 0,
+                        paddingTop: 0,
+                    }}
+                    colSpan={6}
+                    onClick={() => setOpen(!open)}
+                >
+                    <Collapse
+                        in={open}
+                        timeout='auto'
+                        unmountOnExit
+                    >
+                        <Table
+                            size='small'
+                            sx={{ width: '100%' }}
+                        >
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableCell align='center'>
+                                    <Chapters
+                                        value={
+                                            review.comment
+                                        }
+                                    />
+                                </TableCell>
+                            </TableBody>
+                        </Table>
+                    </Collapse>
+                </TableCell>
+            </TableRow>
+        </React.Fragment>
+    );
+};
 
 const ReviewTable = () => {
     const [pageIndex, setPageIndex] = React.useState(0);
@@ -304,10 +386,7 @@ const ReviewTable = () => {
                 }}
             />
             <TableContainer component={Paper} sx={style}>
-                <Table
-                    sx={{ minWidth: 600 }}
-                    aria-label='simple table'
-                >
+                <Table sx={{ minWidth: 600 }}>
                     <TableHead>
                         <TableRow>
                             <TableCell align='center'>
@@ -320,48 +399,13 @@ const ReviewTable = () => {
                                 Score
                             </TableCell>
                             <TableCell align='center'>
-                                Comment
-                            </TableCell>
-                            <TableCell align='center'>
                                 Date
                             </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {visibleRows.map((review: Data) => (
-                            <TableRow
-                                key={review.uuid}
-                                sx={{
-                                    '&:last-child td, &:last-child th':
-                                        {
-                                            border: 0,
-                                        },
-                                }}
-                            >
-                                <TableCell
-                                    component='th'
-                                    scope='row'
-                                    align='center'
-                                >
-                                    {review.restaurant}
-                                </TableCell>
-                                <TableCell align='center'>
-                                    {review.reviewer}
-                                </TableCell>
-                                <TableCell align='center'>
-                                    {review.score}
-                                </TableCell>
-                                <TableCell align='center'>
-                                    <Chapters
-                                        value={
-                                            review.comment
-                                        }
-                                    />
-                                </TableCell>
-                                <TableCell align='center'>
-                                    {review.createdAt.toString()}
-                                </TableCell>
-                            </TableRow>
+                            <ReviewRow review={review} />
                         ))}
                         {emptyRows > 0 && (
                             <TableRow
@@ -382,7 +426,7 @@ const ReviewTable = () => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         display: 'flex',
-                        width: 999,
+                        width: '100%',
                     }}
                     count={filteredReviews.length}
                     rowsPerPage={rowsPerPage}
