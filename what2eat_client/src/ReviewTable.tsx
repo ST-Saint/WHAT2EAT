@@ -78,7 +78,6 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, 0%)',
     width: '100%',
-    minWidth: '800px',
     bgcolor: 'background.paper',
     borderColor: 'primary.main',
     // border: '1px solid #3399ff',
