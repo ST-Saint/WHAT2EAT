@@ -2,7 +2,7 @@ import {
     JRPCBody,
     JRPCRequest,
     GetRestaurants,
-    GetDishes,
+    GetDishesByRestaurant,
 } from './RPC/JRPCRequest';
 import { Config } from './config';
 import { DiningProps } from './props';
@@ -27,21 +27,29 @@ interface Dining {
     uuid: string;
     unixTimestamp: number;
     restaurant: string;
+    people: number;
+    price: number;
 }
 
 class DiningForm implements Dining {
     uuid: string;
     unixTimestamp: number;
     restaurant: string;
+    people: number;
+    price: number;
 
     constructor(
         uuid: string,
         unixTimestamp: number,
         restaurant: string,
+        people: number,
+        price: number
     ) {
         this.uuid = uuid;
         this.unixTimestamp = unixTimestamp;
         this.restaurant = restaurant;
+        this.people = people;
+        this.price = price;
     }
 }
 

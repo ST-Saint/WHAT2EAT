@@ -2,10 +2,9 @@ import { DishEntity } from '../entity/dish-entity';
 import { ErrorResponse } from '../interface/response';
 import { AppDataSource } from '../data-source';
 
-// let restaurantRepo = AppDataSource.getRepository(RestaurantEntity);
 let dishRepo = AppDataSource.getRepository(DishEntity);
 
-export const GetDishes = async (
+export const GetDishesByRestaurant = async (
     params: any,
     callback: (e: ErrorResponse | null, m?: string) => void,
 ) => {

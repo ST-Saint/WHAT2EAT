@@ -13,7 +13,7 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity({name: "dining"})
+@Entity({ name: 'dining' })
 export class DiningEntity implements Dining {
     // @PrimaryColumn({ type: 'uuid' })
     @PrimaryGeneratedColumn('uuid')
@@ -24,9 +24,20 @@ export class DiningEntity implements Dining {
         () => RestaurantEntity,
         (restaurant: { name: string }) => restaurant.name,
     )
-    @JoinColumn([{ name: 'restaurant', referencedColumnName: 'name' }])
+    @JoinColumn([
+        {
+            name: 'restaurant',
+            referencedColumnName: 'name',
+        },
+    ])
     restaurant: string;
 
     @Column({ type: 'int' })
     unixTimestamp: number;
+
+    @Column({ nullable: true })
+    people: number;
+
+    @Column({ nullable: true })
+    price: number;
 }

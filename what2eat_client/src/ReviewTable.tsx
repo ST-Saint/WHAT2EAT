@@ -1,4 +1,9 @@
 import NavigationBar from './NavigationBar';
+import {
+    GetRestaurants,
+    JRPCBody,
+    JRPCRequest,
+} from './RPC/JRPCRequest';
 import { Config } from './config';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -48,6 +53,13 @@ interface iReview {
     comment: string;
     createdAt: Date;
     uuid: string;
+}
+
+interface iDishReview {
+    uuid: string;
+    review_id: string;
+    dish: string;
+    score: number;
 }
 
 interface TablePaginationActionsProps {
@@ -181,6 +193,92 @@ function TablePaginationActions(
 const ReviewRow = (props: { review: Data }) => {
     const { review } = props;
     const [open, setOpen] = React.useState(false);
+    const [dishesReview, setDishesReview] = React.useState<
+        iDishReview[]
+    >([]);
+
+    const getDishesReview = async (review_id: string) => {
+        let dishesByReviewBody = JRPCBody(
+            'get_dishes_by_review',
+            { review_id: review_id },
+        );
+        let response = await JRPCRequest(
+            dishesByReviewBody,
+        );
+        let dishesReview: iDishReview[] = JSON.parse(
+            response.result,
+        );
+        setDishesReview(dishesReview);
+    };
+
+    const toggleReviewDetail = async (
+        review_id: string,
+    ) => {
+        setOpen(!open);
+        if (dishesReview.length == 0) {
+            getDishesReview(review_id);
+        }
+    };
+
+    const dishReviewRow = (dishReview: iDishReview) => {
+        return (
+            <React.Fragment>
+                <TableCell
+                    sx={{
+                        width: '40%',
+                    }}
+                >
+                    {dishReview.dish}
+                </TableCell>
+                <TableCell
+                    align='center'
+                    sx={{
+                        width: '10%',
+                    }}
+                >
+                    {dishReview.score}
+                </TableCell>
+                <TableCell
+                    sx={{
+                        width: '10%',
+                    }}
+                ></TableCell>
+            </React.Fragment>
+        );
+    };
+    const dishReviewRowComment = () => {
+        return (
+            <TableCell
+                align='center'
+                rowSpan={dishesReview.length}
+                sx={{
+                    width: '50%',
+                }}
+            >
+                <Chapters value={review.comment} />
+            </TableCell>
+        );
+    };
+
+    const dishReviewDetails = dishesReview.map(
+        (dishReview: iDishReview, index: number) => {
+            if (index == 0) {
+                return (
+                    <TableRow>
+                        {dishReviewRow(dishReview)}
+                        {dishReviewRowComment()}
+                    </TableRow>
+                );
+            } else {
+                return (
+                    <TableRow>
+                        {dishReviewRow(dishReview)}
+                    </TableRow>
+                );
+            }
+        },
+    );
+
     return (
         <React.Fragment>
             <TableRow
@@ -190,7 +288,9 @@ const ReviewRow = (props: { review: Data }) => {
                         border: 0,
                     },
                 }}
-                onClick={() => setOpen(!open)}
+                onClick={() => {
+                    toggleReviewDetail(review.uuid);
+                }}
             >
                 <TableCell
                     component='th'
@@ -214,11 +314,10 @@ const ReviewRow = (props: { review: Data }) => {
             <TableRow>
                 <TableCell
                     style={{
-                        paddingBottom: 0,
-                        paddingTop: 0,
+                        paddingBottom: open ? '1em' : 0,
+                        paddingTop: open ? '0.5em' : 0,
                     }}
                     colSpan={6}
-                    onClick={() => setOpen(!open)}
                 >
                     <Collapse
                         in={open}
@@ -227,21 +326,40 @@ const ReviewRow = (props: { review: Data }) => {
                     >
                         <Table
                             size='small'
-                            sx={{ width: '100%' }}
+                            sx={{
+                                width: '100%',
+                                margin: 'auto',
+                            }}
                         >
                             <TableHead>
                                 <TableRow>
-                                    <TableCell></TableCell>
+                                    <TableCell
+                                        sx={{ border: 0 }}
+                                    >
+                                        Dishes
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{ border: 0 }}
+                                        align='center'
+                                    >
+                                        Score
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{
+                                            border: 0,
+                                            width: '10%',
+                                        }}
+                                    ></TableCell>
+                                    <TableCell
+                                        sx={{ border: 0 }}
+                                        align='center'
+                                    >
+                                        Comment
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableCell align='center'>
-                                    <Chapters
-                                        value={
-                                            review.comment
-                                        }
-                                    />
-                                </TableCell>
+                                {dishReviewDetails}
                             </TableBody>
                         </Table>
                     </Collapse>
@@ -388,7 +506,7 @@ const ReviewTable = () => {
                 <Table sx={{ minWidth: 600 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell align='center'>
+                            <TableCell>
                                 Restaurant
                             </TableCell>
                             <TableCell align='center'>

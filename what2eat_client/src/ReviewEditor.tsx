@@ -7,7 +7,7 @@ import {
     JRPCBody,
     GetRestaurants,
     GetDinings,
-    GetDishes,
+    GetDishesByRestaurant,
 } from './RPC/JRPCRequest';
 import { Config } from './config';
 import { css } from '@emotion/css';
@@ -264,7 +264,7 @@ const ReviewEditor = () => {
     ) {
         let restaurant = dining_restaurant.split(' | ')[0];
         setValue('restaurant', restaurant);
-        let restaurantDishes = await GetDishes(restaurant);
+        let restaurantDishes = await GetDishesByRestaurant(restaurant);
         setCandidateDishes(restaurantDishes);
 
         let dining_id = dining_restaurant

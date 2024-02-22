@@ -54,9 +54,9 @@ export const GetDinings = async (callback: Function) => {
     }
 };
 
-export const GetDishes = async (restaurant: string) => {
+export const GetDishesByRestaurant = async (restaurant: string) => {
     try {
-        let getReviewersBody = JRPCBody('get_dishes', {
+        let getReviewersBody = JRPCBody('get_dishes_by_restaurant', {
             restaurant: restaurant,
         });
         let response = await JRPCRequest(getReviewersBody);
