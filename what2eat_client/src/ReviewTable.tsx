@@ -86,13 +86,11 @@ function Chapters({ value }: { value: string }) {
 
 const style = {
     position: 'absolute' as 'absolute',
-    // top: '15%',
     left: '50%',
     transform: 'translate(-50%, 0%)',
     width: '100%',
     bgcolor: 'background.paper',
     borderColor: 'primary.main',
-    // border: '1px solid #3399ff',
     boxShadow: 24,
     borderRadius: 2,
     pt: 2,
@@ -503,7 +501,7 @@ const ReviewTable = () => {
                 }}
             />
             <TableContainer component={Paper} sx={style}>
-                <Table sx={{ minWidth: 600 }}>
+                <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell>
