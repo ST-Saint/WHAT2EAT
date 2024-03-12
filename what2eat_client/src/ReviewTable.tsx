@@ -223,7 +223,7 @@ const ReviewRow = (props: { review: Data }) => {
             <React.Fragment>
                 <TableCell
                     sx={{
-                        width: '40%',
+                        width: '30%',
                     }}
                 >
                     {dishReview.dish}
@@ -231,14 +231,14 @@ const ReviewRow = (props: { review: Data }) => {
                 <TableCell
                     align='center'
                     sx={{
-                        width: '10%',
+                        width: '0%',
                     }}
                 >
                     {dishReview.score}
                 </TableCell>
                 <TableCell
                     sx={{
-                        width: '10%',
+                        width: '0%',
                     }}
                 ></TableCell>
             </React.Fragment>
@@ -250,7 +250,7 @@ const ReviewRow = (props: { review: Data }) => {
                 align='center'
                 rowSpan={dishesReview.length}
                 sx={{
-                    width: '50%',
+                    width: '60%',
                 }}
             >
                 <Chapters value={review.comment} />
@@ -345,7 +345,6 @@ const ReviewRow = (props: { review: Data }) => {
                                     <TableCell
                                         sx={{
                                             border: 0,
-                                            width: '10%',
                                         }}
                                     ></TableCell>
                                     <TableCell
