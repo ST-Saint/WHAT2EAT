@@ -195,7 +195,8 @@ const ReviewRow = (props: { review: Data }) => {
         iDishReview[]
     >([]);
 
-    const getDishesReview = async (review_id: string) => {
+    const updateDishesReview = async (review_id: string) => {
+        setOpen(false);
         let dishesByReviewBody = JRPCBody(
             'get_dishes_by_review',
             { review_id: review_id },
@@ -209,13 +210,12 @@ const ReviewRow = (props: { review: Data }) => {
         setDishesReview(dishesReview);
     };
 
-    const toggleReviewDetail = async (
-        review_id: string,
-    ) => {
+    useEffect(() => {
+        updateDishesReview(review.uuid);
+    }, [review]);
+
+    const toggleReviewDetail = async () => {
         setOpen(!open);
-        if (dishesReview.length == 0) {
-            getDishesReview(review_id);
-        }
     };
 
     const dishReviewRow = (dishReview: iDishReview) => {
@@ -287,7 +287,7 @@ const ReviewRow = (props: { review: Data }) => {
                     },
                 }}
                 onClick={() => {
-                    toggleReviewDetail(review.uuid);
+                    toggleReviewDetail();
                 }}
             >
                 <TableCell
