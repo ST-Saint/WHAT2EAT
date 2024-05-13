@@ -34,7 +34,7 @@ npm start
 
 #### Config
 Open `/what2eat_client/src/config.ts` and update the serverIP
-```json
+```js
 export const Config = {
     serverIP: "${SERVER_IP}:60024"
 }
