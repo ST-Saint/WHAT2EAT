@@ -1,3 +1,3 @@
 export const Config = {
-    serverIP: "http://98.142.143.30:5000"
+    serverIP: "http://127.0.0.1:60024"
 }
