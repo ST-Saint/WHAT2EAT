@@ -1,15 +1,9 @@
-import { Review } from '../interface/review';
 import { ErrorResponse } from '../interface/response';
-import { AppDataSource } from '../data-source';
 import { ReviewEntity } from '../entity/review-entity';
-import { RestaurantEntity } from '../entity/restaurant-entity';
-import { AddReviewRequest } from '../interface/request';
 import { DishReviewEntity } from '../entity/dish-review-entity';
 import {
-    RestaurantRepo,
     DishReviewRepo,
     ReviewRepo,
-    DiningRepo,
 } from '../data-source';
 
 interface ReviewForm {
@@ -19,6 +13,7 @@ interface ReviewForm {
     score: number;
     dishes: string[];
     scores: number[];
+    dishComments: string[];
     comment: string;
     date: Date;
     uuid: string;
