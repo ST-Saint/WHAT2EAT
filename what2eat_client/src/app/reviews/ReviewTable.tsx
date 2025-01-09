@@ -57,6 +57,7 @@ interface iDishReview {
     uuid: string;
     review_id: string;
     dish: string;
+    comment: string | null;
     score: number;
 }
 
@@ -109,7 +110,9 @@ const ReviewDetailTable = (props: {
                             <TableCell>
                                 {dish.score}
                             </TableCell>
-                            <TableCell>{''}</TableCell>
+                            <TableCell>
+                                {dish.comment}
+                            </TableCell>
                         </TableRow>
                     )}
                 </TableBody>
@@ -118,7 +121,9 @@ const ReviewDetailTable = (props: {
     );
 };
 
-const ToggleSubRowButton = (props: { review: IReviewData }) => {
+const ToggleSubRowButton = (props: {
+    review: IReviewData;
+}) => {
     const { review } = props;
     const [isExpanded, setIsExpanded] = useState(false);
 
