@@ -80,6 +80,7 @@ const ReviewDetailTable = (props: {
                         <TableCell>
                             <Textarea
                                 isReadOnly
+                                minRows={1}
                                 defaultValue={
                                     review.comment
                                 }
