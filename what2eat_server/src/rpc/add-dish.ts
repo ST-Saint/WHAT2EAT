@@ -14,6 +14,7 @@ export const AddDish = async (
 ) => {
     let restaurant: RestaurantEntity =
         new RestaurantEntity();
+    console.log(dish);
     restaurant.name = dish.restaurant;
     await RestaurantRepo.upsert(restaurant, ['name']);
 
@@ -26,7 +27,7 @@ export const AddDish = async (
         );
         callback(error);
     } else {
-        callback(null, JSON.stringify(ret));
+        callback(null, JSON.stringify(dish.name));
     }
 };
 

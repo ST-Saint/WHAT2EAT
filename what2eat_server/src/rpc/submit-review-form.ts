@@ -52,6 +52,7 @@ export const SubmitReviewForm = async (
                 dishReviewEntity.review_id = savedReview.uuid;
                 dishReviewEntity.dish = value;
                 dishReviewEntity.score = review.scores[index];
+                dishReviewEntity.comment = review.dishComments[index];
                 DishReviewRepo.save(dishReviewEntity);
             }
         });

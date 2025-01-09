@@ -44,6 +44,9 @@ export class DishReviewEntity implements DishReview {
     @Column({ type: 'double' })
     score: number;
 
+    @Column({ type: 'text', nullable: true })
+    comment: string | null;
+
     @CreateDateColumn()
     createdAt: Date;
 
