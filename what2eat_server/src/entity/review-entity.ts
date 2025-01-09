@@ -42,8 +42,8 @@ export class ReviewEntity implements Review {
     ])
     restaurant: string;
 
-    @Column({ type: 'text' })
-    comment: string;
+    @Column({ type: 'text', nullable: true })
+    comment: string | null;
 
     @Column({ type: 'double' })
     score: number;
