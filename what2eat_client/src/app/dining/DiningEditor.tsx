@@ -125,6 +125,7 @@ const DiningEditor = ({ setDining }: DiningProps) => {
                 radius='sm'
                 size='lg'
                 name='restaurant'
+                placeholder='Restaurant'
                 items={restaurants}
             >
                 {(restaurant) => (

@@ -69,7 +69,9 @@ type DishProps = {
 };
 
 const DishEditor = ({ dining }: DishProps) => {
-    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+    const [restaurants, setRestaurants] = useState<
+        Restaurant[]
+    >([]);
     const [submitted, setSubmitted] = useState<Dish | null>(
         null,
     );
@@ -166,6 +168,7 @@ const DishEditor = ({ dining }: DishProps) => {
                 radius='sm'
                 size='lg'
                 name='restaurant'
+                placeholder='Restaurant'
                 items={restaurants}
             >
                 {(restaurant) => (
