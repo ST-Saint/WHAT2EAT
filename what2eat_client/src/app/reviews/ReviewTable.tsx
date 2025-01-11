@@ -211,7 +211,7 @@ const ToggleSubRowButton = (props: {
 
 const ReviewTable = () => {
     const [pageIndex, setPageIndex] = React.useState(1);
-    const rowsPerPage = 10;
+    const rowsPerPage = 12;
     const [reviews, setReviews] = useState([]);
     const [filter, setFilter] = React.useState('');
     const [filteredReviews, setFilteredReviews] =
