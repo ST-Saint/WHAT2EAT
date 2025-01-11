@@ -21,7 +21,7 @@ import {
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { v4 as UUID } from 'uuid';
 
@@ -157,7 +157,6 @@ const ToggleSubRowButton = (props: {
         );
 
         if (rowToInsertAfter) {
-            console.log('find row', rowToInsertAfter);
             if (isExpanded) {
                 const existingRow = document.getElementById(
                     `tsr-${review.uuid}`,
@@ -212,16 +211,44 @@ const ToggleSubRowButton = (props: {
 
 const ReviewTable = () => {
     const [pageIndex, setPageIndex] = React.useState(1);
-    const [rowsPerPage, setRowsPerPage] =
-        React.useState(12);
+    const rowsPerPage = 10;
     const [reviews, setReviews] = useState([]);
     const [filter, setFilter] = React.useState('');
     const [filteredReviews, setFilteredReviews] =
         React.useState<iReview[]>([]);
 
+    const visibleRows = React.useMemo(() => {
+        return filteredReviews.slice(
+            (pageIndex - 1) * rowsPerPage,
+            pageIndex * rowsPerPage,
+        );
+    }, [pageIndex, rowsPerPage, filteredReviews]);
+
+    const pageLimit = React.useMemo(() => {
+        return (
+            Math.trunc(
+                filteredReviews.length / rowsPerPage,
+            ) + 1
+        );
+    }, [rowsPerPage, filteredReviews]);
+
+    const tableRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         getReviews();
     }, []);
+
+    useEffect(() => {
+        if (tableRef.current) {
+            const elements =
+                tableRef.current.querySelectorAll(
+                    '[id^="tsr-"]',
+                );
+            elements.forEach((el) => {
+                console.log(el);
+                el.remove();
+            });
+        }
+    }, [visibleRows]);
 
     const getReviews = async () => {
         const jsonRPCBody: any = {
@@ -253,17 +280,7 @@ const ReviewTable = () => {
     const handleChangePageIndex = (
         newPageIndex: number,
     ) => {
-        const pageLimit = Math.trunc(
-            (reviews.length - 1) / rowsPerPage,
-        );
         setPageIndex(Math.min(newPageIndex, pageLimit));
-    };
-
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPageIndex(0);
     };
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -275,13 +292,6 @@ const ReviewTable = () => {
                         filteredReviews.length,
               )
             : 0;
-
-    const visibleRows = React.useMemo(() => {
-        return filteredReviews.slice(
-            (pageIndex - 1) * rowsPerPage,
-            pageIndex * rowsPerPage,
-        );
-    }, [pageIndex, rowsPerPage, filteredReviews]);
 
     function reviewToString(review: iReview) {
         return [
@@ -321,24 +331,11 @@ const ReviewTable = () => {
                                 );
                             },
                         );
-                        const pageLimit = Math.trunc(
-                            (fReviews.length - 1) /
-                                rowsPerPage,
-                        );
-                        setPageIndex(
-                            Math.min(pageIndex, pageLimit),
-                        );
                         setFilteredReviews(fReviews);
                     } else {
-                        const pageLimit = Math.trunc(
-                            (reviews.length - 1) /
-                                rowsPerPage,
-                        );
-                        setPageIndex(
-                            Math.min(pageIndex, pageLimit),
-                        );
                         setFilteredReviews(reviews);
                     }
+                    setPageIndex(1);
                 }}
             />
             <Table
@@ -351,12 +348,14 @@ const ReviewTable = () => {
                             isCompact
                             showControls
                             showShadow
-                            total={filteredReviews.length}
+                            total={pageLimit}
+                            initialPage={1}
                             page={pageIndex}
                             onChange={handleChangePageIndex}
                         />
                     </div>
                 }
+                ref={tableRef}
             >
                 <TableHeader>
                     <TableColumn key='restaurant'>
