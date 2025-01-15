@@ -58,19 +58,18 @@ function NavigationBar() {
                     <NavbarItem
                         isActive={pageIdx == index}
                         key={page}
+                        className='text-xl'
                     >
-                        <Link
-                            color={
+                        <NextLink
+                            href={ref[index]}
+                            className={
                                 pageIdx == index
-                                    ? 'primary'
-                                    : 'foreground'
+                                    ? 'text-primary'
+                                    : ''
                             }
-                            className='text-xl'
                         >
-                            <NextLink href={ref[index]}>
-                                {page}
-                            </NextLink>
-                        </Link>
+                            {page}
+                        </NextLink>
                     </NavbarItem>
                 ))}
             </NavbarContent>
@@ -78,21 +77,18 @@ function NavigationBar() {
                 {pages.map((page, index) => (
                     <NavbarMenuItem
                         key={`${page}-${index}`}
+                        className='w-full'
                     >
-                        <Link
-                            className='w-full'
+                        <NextLink
                             href={ref[index]}
-                            color={
+                            className={
                                 pageIdx == index
-                                    ? 'primary'
-                                    : 'foreground'
+                                    ? 'text-primary'
+                                    : ''
                             }
-                            size='lg'
                         >
-                            <NextLink href={ref[index]}>
-                                {page}
-                            </NextLink>
-                        </Link>
+                            {page}
+                        </NextLink>
                     </NavbarMenuItem>
                 ))}
             </NavbarMenu>

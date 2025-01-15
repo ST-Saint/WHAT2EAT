@@ -6,7 +6,7 @@ import * as React from 'react';
 
 export default function Home() {
     return (
-        <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center h-screen w-screen font-[family-name:var(--font-geist-sans)]'>
+        <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center h-screen w-screen'>
             <NavigationBar />
             <header className='max-h-[90vh] flex flex-col p-8 items-center justify-center text-[calc(10px+2vmin)]'>
                 <Image
@@ -17,8 +17,11 @@ export default function Home() {
                     height={500}
                 />
                 <p>
-                    In the pursuit of what to eat, we are
-                    also seeking deeper meanings.
+                    In the pursuit of{' '}
+                    <span className='text-primary'>
+                        what to eat
+                    </span>
+                    , we are seeking deeper meanings.
                 </p>
             </header>
         </div>
