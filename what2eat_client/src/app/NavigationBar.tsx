@@ -16,6 +16,8 @@ import {
 
 import { usePathname } from 'next/navigation';
 
+import NextLink from 'next/link';
+
 const pages: string[] = [
     'Home',
     'Reviews',
@@ -31,11 +33,9 @@ const ref: string[] = [
 ];
 
 function NavigationBar() {
-    const [isMenuOpen] =
-        React.useState(false);
+    const [isMenuOpen] = React.useState(false);
 
     const pageIdx = ref.indexOf(usePathname());
-    const selPage = pageIdx > 0 ? pages[pageIdx] : 'Home';
     return (
         <Navbar className='w-full flex flex-row items-center h-[10vh]'>
             <NavbarContent>
@@ -49,26 +49,27 @@ function NavigationBar() {
                 />
                 <NavbarBrand>
                     <p className='font-bold text-2xl'>
-                        W2E
+                        <NextLink href='/'>W2E</NextLink>
                     </p>
                 </NavbarBrand>
             </NavbarContent>
             <NavbarContent className='hidden sm:flex gap-4 min-w-1/2'>
                 {pages.map((page, index) => (
                     <NavbarItem
-                        isActive={page == selPage}
+                        isActive={pageIdx == index}
                         key={page}
                     >
                         <Link
-                            href={ref[index]}
                             color={
-                                page == selPage
+                                pageIdx == index
                                     ? 'primary'
                                     : 'foreground'
                             }
                             className='text-xl'
                         >
-                            {page}
+                            <NextLink href={ref[index]}>
+                                {page}
+                            </NextLink>
                         </Link>
                     </NavbarItem>
                 ))}
@@ -82,13 +83,15 @@ function NavigationBar() {
                             className='w-full'
                             href={ref[index]}
                             color={
-                                page == selPage
+                                pageIdx == index
                                     ? 'primary'
                                     : 'foreground'
                             }
                             size='lg'
                         >
-                            {page}
+                            <NextLink href={ref[index]}>
+                                {page}
+                            </NextLink>
                         </Link>
                     </NavbarMenuItem>
                 ))}

@@ -39,6 +39,21 @@ interface IReviewer {
     name: string;
 }
 
+function screenWidthToSize() {
+    if (typeof window !== 'undefined') {
+        const width = window.innerWidth;
+
+        if (width >= 1024) {
+            return 'lg';
+        } else if (width >= 768) {
+            return 'md';
+        } else {
+            return 'sm';
+        }
+    }
+    return 'sm';
+}
+
 const ReviewEditor = () => {
     const [submitted, setSubmitted] =
         useState<reviewForm | null>(null);
@@ -57,6 +72,8 @@ const ReviewEditor = () => {
     const [dishScores, setDishScores] = useState([0]);
     const [dishComments, setDishComments] = useState(['']);
     const [comment, setComment] = useState('');
+
+    const windowSize = screenWidthToSize();
 
     const onDiningChange = async (
         diningRestaurant: string,
@@ -191,10 +208,11 @@ const ReviewEditor = () => {
                 >
                     {
                         <Autocomplete
-                            size='lg'
-                            className='flex-[3]'
+                            size={windowSize}
+                            className='flex-[2]'
                             variant='bordered'
                             items={candDishes}
+                            isClearable={windowSize == 'lg'}
                             label={'Dish ' + (index + 1)}
                             name={`dishes[${index}]`}
                             popoverProps={{
@@ -219,7 +237,7 @@ const ReviewEditor = () => {
                     <Input
                         className='flex-[2]'
                         variant='bordered'
-                        size='lg'
+                        size={windowSize}
                         label={'Comment'}
                         name={`dishComments[${index}]`}
                         value={dishComments[index]}
@@ -234,7 +252,7 @@ const ReviewEditor = () => {
                         isRequired={dishes[index] != ''}
                         className='flex-[1]'
                         variant='bordered'
-                        size='lg'
+                        size={windowSize}
                         label={'Score'}
                         placeholder='0'
                         name={`disheScores[${index}]`}
@@ -346,7 +364,7 @@ const ReviewEditor = () => {
 
     return (
         <Form
-            className='flex flex-col w-full w-full w-3/4 space-y-4'
+            className='flex flex-col w-full lg:w-3/4 space-y-4 p-4'
             validationBehavior='native'
             validationErrors={errors}
             onReset={() => setSubmitted(null)}
@@ -371,7 +389,7 @@ const ReviewEditor = () => {
                         return errors.name;
                     }}
                     label='Reviewer'
-                    size='lg'
+                    size={windowSize}
                     name='reviewer'
                     // placeholder='Select Reviewer'
                     variant='bordered'
@@ -412,7 +430,7 @@ const ReviewEditor = () => {
                     popoverProps={{
                         shouldCloseOnScroll: false,
                     }}
-                    size='lg'
+                    size={windowSize}
                     // placeholder='Select Dining History'
                     onSelectionChange={(sel) => {
                         onDiningChange(sel as string);
@@ -432,7 +450,7 @@ const ReviewEditor = () => {
                         isReadOnly
                         isDisabled
                         value={restaurant}
-                        size='lg'
+                        size={windowSize}
                         label='Dining Id'
                         description={
                             'avg: ' + getScoresAverage()
@@ -445,10 +463,10 @@ const ReviewEditor = () => {
                         isRequired
                         endContent={<></>}
                         className='flex-[1]'
-                        size='lg'
+                        size={windowSize}
                         variant='bordered'
-        value={diningScore.toString()}
-               onValueChange={onDiningScoreChange}
+                        value={diningScore.toString()}
+                        onValueChange={onDiningScoreChange}
                         label='Dining Score'
                         placeholder='0'
                         name='diningScore'
@@ -459,7 +477,7 @@ const ReviewEditor = () => {
                 {dishFields}
 
                 <Textarea
-                    size='lg'
+                    size={windowSize}
                     label='Restaurant Comment'
                     variant='bordered'
                     value={comment}
