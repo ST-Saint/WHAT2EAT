@@ -144,7 +144,7 @@ const DishEditor = ({ dining }: DishProps) => {
             key={index}
             label={`Dish ${index + 1}`}
             radius='sm'
-            size='sm'
+            size='lg'
             variant='bordered'
             value={value}
             onChange={(e) =>

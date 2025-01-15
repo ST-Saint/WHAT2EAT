@@ -18,10 +18,13 @@ import React, {
 } from 'react';
 
 import {
+    Input,
     Autocomplete,
     AutocompleteItem,
     Form,
 } from '@nextui-org/react';
+
+import { v4 as UUID } from 'uuid';
 
 interface Dining {
     uuid: string;
@@ -85,18 +88,20 @@ const DiningEditor = ({ setDining }: DiningProps) => {
             new FormData(event.currentTarget),
         );
         const dining: Dining = {
-            uuid: '',
+            uuid: UUID(),
             unixTimestamp: Math.floor(
                 time!.toDate().getTime() / 1000,
             ),
             restaurant: data.restaurant as string,
-            people: 1,
-            price: 0,
+            people: data.people || 0,
+            price: data.price || 0,
         };
         const getDiningBody = JRPCBody(
             'add_dining',
             dining,
         );
+
+        setSubmitted(dining);
         const response = await JRPCRequest(getDiningBody);
         setSubmitResp(response);
         const dining_id = JSON.parse(response.result);
