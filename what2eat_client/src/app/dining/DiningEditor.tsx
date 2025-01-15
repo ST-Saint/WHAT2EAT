@@ -126,7 +126,7 @@ const DiningEditor = ({ setDining }: DiningProps) => {
                 size='lg'
                 name='restaurant'
                 placeholder='Restaurant'
-                items={restaurants}
+                defaultItems={restaurants}
             >
                 {(restaurant) => (
                     <AutocompleteItem key={restaurant.name}>

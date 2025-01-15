@@ -211,7 +211,7 @@ const ReviewEditor = () => {
                             size={windowSize}
                             className='flex-[2]'
                             variant='bordered'
-                            items={candDishes}
+                            defaultItems={candDishes}
                             isClearable={windowSize == 'lg'}
                             label={'Dish ' + (index + 1)}
                             name={`dishes[${index}]`}
@@ -376,7 +376,7 @@ const ReviewEditor = () => {
             <div className='flex flex-col items-center gap-4 w-full'>
                 <Autocomplete
                     isRequired
-                    items={reviewers}
+                    defaultItems={reviewers}
                     errorMessage={({
                         validationDetails,
                     }) => {

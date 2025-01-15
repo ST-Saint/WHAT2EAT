@@ -169,7 +169,7 @@ const DishEditor = ({ dining }: DishProps) => {
                 size='lg'
                 name='restaurant'
                 placeholder='Restaurant'
-                items={restaurants}
+                defaultItems={restaurants}
             >
                 {(restaurant) => (
                     <AutocompleteItem key={restaurant.name}>
