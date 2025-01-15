@@ -72,7 +72,8 @@ type DiningProps = {
 };
 
 const DiningEditor = ({ setDining }: DiningProps) => {
-    const [submitted, setSubmitted] = useState(null);
+    const [submitted, setSubmitted] =
+        useState<Dining | null>(null);
     const [submitResp, setSubmitResp] =
         React.useState(null);
     const [restaurants, setRestaurants] = useState<
@@ -93,8 +94,8 @@ const DiningEditor = ({ setDining }: DiningProps) => {
                 time!.toDate().getTime() / 1000,
             ),
             restaurant: data.restaurant as string,
-            people: data.people || 0,
-            price: data.price || 0,
+            people: Number(data.people || 0),
+            price: Number(data.price || 0),
         };
         const getDiningBody = JRPCBody(
             'add_dining',
