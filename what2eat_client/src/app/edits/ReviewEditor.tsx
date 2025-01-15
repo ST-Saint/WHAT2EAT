@@ -364,7 +364,7 @@ const ReviewEditor = () => {
 
     return (
         <Form
-            className='flex flex-col w-full lg:w-3/4 space-y-4 p-4'
+            className='flex flex-col w-full lg:w-[4/5] space-y-4 p-4'
             validationBehavior='native'
             validationErrors={errors}
             onReset={() => setSubmitted(null)}

@@ -168,7 +168,7 @@ const DishEditor = ({ dining }: DishProps) => {
                 radius='sm'
                 size='lg'
                 name='restaurant'
-                placeholder='Restaurant'
+                label='Restaurant'
                 defaultItems={restaurants}
             >
                 {(restaurant) => (
