@@ -393,7 +393,7 @@ const ReviewTable = () => {
                                 {dayjs(review.createdAt)
                                     .tz('America/Vancouver')
                                     .format(
-                                        'YYYY-MM-DD HH:MM',
+                                        'YYYY-MM-DD HH:mm',
                                     )}
                             </TableCell>
                             <TableCell>
