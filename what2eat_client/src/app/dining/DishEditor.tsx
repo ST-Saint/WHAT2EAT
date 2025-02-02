@@ -51,10 +51,7 @@ export class Dish implements IDish {
     restaurant: string;
     name: string;
 
-    constructor(
-        restaurant: string,
-        name: string,
-    ) {
+    constructor(restaurant: string, name: string) {
         this.restaurant = restaurant;
         this.name = name;
     }
@@ -62,10 +59,12 @@ export class Dish implements IDish {
 
 type DishEditorProps = {
     diningRestaurant: string;
+    setDiningRestaurant: (restaurant: string) => void;
 };
 
 const DishEditor = ({
     diningRestaurant,
+    setDiningRestaurant,
 }: DishEditorProps) => {
     const [restaurants, setRestaurants] = useState<
         Restaurant[]
@@ -174,6 +173,7 @@ const DishEditor = ({
                 scrollShadowProps={{
                     isEnabled: false,
                 }}
+                onInputChange={setDiningRestaurant}
             >
                 {(restaurant) => (
                     <AutocompleteItem key={restaurant.name}>
@@ -218,4 +218,5 @@ const DishEditor = ({
         </Form>
     );
 };
+
 export default DishEditor;
