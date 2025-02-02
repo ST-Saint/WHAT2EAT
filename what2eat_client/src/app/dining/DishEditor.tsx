@@ -5,7 +5,7 @@ import {
     JRPCRequest,
     GetRestaurants,
 } from '@/app/RPC/JRPCRequest';
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input } from '@heroui/react';
 import {
     now,
     parseDate,
@@ -18,7 +18,7 @@ import {
     Form,
     Autocomplete,
     AutocompleteItem,
-} from '@nextui-org/react';
+} from '@heroui/react';
 import { Restaurant } from './DiningEditor';
 
 interface IDish {
@@ -64,11 +64,13 @@ export class Dish implements IDish {
     }
 }
 
-type DishProps = {
-    dining: string;
+type DishEditorProps = {
+    diningRestaurant: string;
 };
 
-const DishEditor = ({ dining }: DishProps) => {
+const DishEditor = ({
+    diningRestaurant,
+}: DishEditorProps) => {
     const [restaurants, setRestaurants] = useState<
         Restaurant[]
     >([]);
@@ -161,7 +163,6 @@ const DishEditor = ({ dining }: DishProps) => {
             <h1 className='text-3xl font-bold mb-4 leading-relaxed'>
                 Dishes
             </h1>
-
             <Autocomplete
                 isRequired
                 variant='bordered'
@@ -169,7 +170,15 @@ const DishEditor = ({ dining }: DishProps) => {
                 size='lg'
                 name='restaurant'
                 label='Restaurant'
+                allowsCustomValue={true}
+                inputValue={diningRestaurant}
                 defaultItems={restaurants}
+                popoverProps={{
+                    shouldCloseOnScroll: false,
+                }}
+                scrollShadowProps={{
+                    isEnabled: false,
+                }}
             >
                 {(restaurant) => (
                     <AutocompleteItem key={restaurant.name}>

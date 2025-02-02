@@ -12,7 +12,7 @@ import {
     NavbarMenuToggle,
     NavbarMenu,
     NavbarMenuItem,
-} from '@nextui-org/react';
+} from "@heroui/react";
 
 import { usePathname } from 'next/navigation';
 

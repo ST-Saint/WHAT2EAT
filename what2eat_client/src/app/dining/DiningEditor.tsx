@@ -10,7 +10,7 @@ import {
     getLocalTimeZone,
     now,
 } from '@internationalized/date';
-import { Button, DatePicker } from '@nextui-org/react';
+import { Button, DatePicker } from '@heroui/react';
 import React, {
     useEffect,
     useLayoutEffect,
@@ -22,7 +22,7 @@ import {
     Autocomplete,
     AutocompleteItem,
     Form,
-} from '@nextui-org/react';
+} from '@heroui/react';
 
 import { v4 as UUID } from 'uuid';
 
@@ -68,10 +68,12 @@ class DiningForm implements Dining {
 }
 
 type DiningProps = {
-    setDining: (dining: string) => void;
+    setDiningRestaurant: (restaurant: string) => void;
 };
 
-const DiningEditor = ({ setDining }: DiningProps) => {
+const DiningEditor = ({
+    setDiningRestaurant,
+}: DiningProps) => {
     const [submitted, setSubmitted] =
         useState<Dining | null>(null);
     const [submitResp, setSubmitResp] =
@@ -106,7 +108,7 @@ const DiningEditor = ({ setDining }: DiningProps) => {
         const response = await JRPCRequest(getDiningBody);
         setSubmitResp(response);
         const dining_id = JSON.parse(response.result);
-        setDining(dining_id);
+        setDiningRestaurant(data.restaurant as string);
     };
 
     useEffect(() => {
@@ -134,6 +136,12 @@ const DiningEditor = ({ setDining }: DiningProps) => {
                 label='Restaurant'
                 allowsCustomValue={true}
                 defaultItems={restaurants}
+                popoverProps={{
+                    shouldCloseOnScroll: false,
+                }}
+                scrollShadowProps={{
+                    isEnabled: false,
+                }}
             >
                 {(restaurant) => (
                     <AutocompleteItem key={restaurant.name}>

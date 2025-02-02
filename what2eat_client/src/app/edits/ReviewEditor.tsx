@@ -13,7 +13,7 @@ import {
     Form,
     Checkbox,
     Textarea,
-} from '@nextui-org/react';
+} from "@heroui/react";
 
 import dayjs from 'dayjs';
 import React from 'react';

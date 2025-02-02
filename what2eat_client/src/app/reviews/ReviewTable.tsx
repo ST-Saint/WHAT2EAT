@@ -16,7 +16,7 @@ import {
     TableHeader,
     TableRow,
     Textarea,
-} from '@nextui-org/react';
+} from "@heroui/react";
 
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
