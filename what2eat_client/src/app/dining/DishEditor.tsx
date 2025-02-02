@@ -22,7 +22,6 @@ import {
 import { Restaurant } from './DiningEditor';
 
 interface IDish {
-    dining: string;
     restaurant: string;
     name: string;
 }
@@ -49,16 +48,13 @@ export class Dining implements IDining {
 }
 
 export class Dish implements IDish {
-    dining: string;
     restaurant: string;
     name: string;
 
     constructor(
-        dining: string,
         restaurant: string,
         name: string,
     ) {
-        this.dining = dining;
         this.restaurant = restaurant;
         this.name = name;
     }
@@ -91,7 +87,6 @@ const DishEditor = ({
         for (const dish of dishes) {
             if (dish != '') {
                 const newDishes = new Dish(
-                    dining,
                     data.restaurant as string,
                     dish,
                 );
