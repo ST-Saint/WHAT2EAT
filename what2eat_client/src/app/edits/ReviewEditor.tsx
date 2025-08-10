@@ -236,7 +236,10 @@ const ReviewEditor = () => {
 								variant='bordered'
 								inputValue={value}
 								defaultItems={candDishes}
-								disabledKeys={dishes}
+								disabledKeys={dishes.filter(
+									(_, idx) =>
+										index !== idx,
+								)}
 								isClearable={true}
 								allowsEmptyCollection={
 									false
