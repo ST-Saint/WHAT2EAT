@@ -317,6 +317,7 @@ const ReviewEditor = () => {
 		setDining('');
 		setRestaurnt('');
 		setDiningScore(0);
+		setComment('');
 		setCandDishes([]);
 		setDishes(['']);
 		setDishScores([0]);
