@@ -61,6 +61,7 @@ const ReviewEditor = () => {
 	const [errors, setErrors] = useState<any>({});
 
 	const [reviewers, setReviewers] = useState([]);
+	const [dining, setDining] = useState('');
 	const [dinings, setDinings] = useState([]);
 	const [reviewer, setReviewer] = useState('');
 	const [restaurant, setRestaurnt] = useState('');
@@ -78,11 +79,14 @@ const ReviewEditor = () => {
 	const onDiningChange = async (
 		diningRestaurant: string,
 	) => {
-		const restaurant = diningRestaurant.split(' | ')[0];
-		setRestaurnt(diningRestaurant);
-		const restaurantDishes =
-			await GetDishesByRestaurant(restaurant);
-		setCandDishes(restaurantDishes);
+		if (diningRestaurant) {
+			const restaurant =
+				diningRestaurant.split(' | ')[0];
+			setRestaurnt(diningRestaurant);
+			const restaurantDishes =
+				await GetDishesByRestaurant(restaurant);
+			setCandDishes(restaurantDishes);
+		}
 	};
 
 	const diningString = (dining: Dining) => {
@@ -392,11 +396,15 @@ const ReviewEditor = () => {
 			const response = await JRPCRequest(
 				addReviewBody,
 			);
-			if (response != null && !response.ok) {
-				/* Handle */
-			}
 			setSubmitResp(response);
 			setReviewer('');
+			setDining('');
+			setRestaurnt('');
+			setDiningScore(0);
+			setCandDishes([]);
+			setDishes(['']);
+			setDishScores([0]);
+			setDishComments(['']);
 		} catch (error: any) {
 			setErrors(error);
 			console.log(error);
@@ -453,6 +461,7 @@ const ReviewEditor = () => {
 
 				<Autocomplete
 					isRequired
+					inputValue={dining}
 					defaultItems={dinings}
 					errorMessage={({
 						validationDetails,
@@ -473,6 +482,7 @@ const ReviewEditor = () => {
 					}}
 					size={windowSize}
 					// placeholder='Select Dining History'
+					onInputChange={setDining}
 					onSelectionChange={(sel) => {
 						onDiningChange(sel as string);
 					}}
