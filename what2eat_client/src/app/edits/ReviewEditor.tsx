@@ -312,6 +312,17 @@ const ReviewEditor = () => {
 		);
 	}, [candDishes, dishes, dishScores, dishComments]);
 
+	const resetForm = () => {
+		setReviewer('');
+		setDining('');
+		setRestaurnt('');
+		setDiningScore(0);
+		setCandDishes([]);
+		setDishes(['']);
+		setDishScores([0]);
+		setDishComments(['']);
+	};
+
 	const onSubmit = async (
 		event: React.FormEvent<HTMLFormElement>,
 	) => {
@@ -397,14 +408,7 @@ const ReviewEditor = () => {
 				addReviewBody,
 			);
 			setSubmitResp(response);
-			setReviewer('');
-			setDining('');
-			setRestaurnt('');
-			setDiningScore(0);
-			setCandDishes([]);
-			setDishes(['']);
-			setDishScores([0]);
-			setDishComments(['']);
+			resetForm();
 		} catch (error: any) {
 			setErrors(error);
 			console.log(error);
@@ -416,7 +420,7 @@ const ReviewEditor = () => {
 			className='flex flex-col w-full lg:w-[4/5] space-y-4 p-4'
 			validationBehavior='native'
 			validationErrors={errors}
-			onReset={() => setSubmitted(null)}
+			onReset={resetForm}
 			onSubmit={onSubmit}
 		>
 			<h1 className='text-3xl font-bold mb-2 leading-relaxed'>
