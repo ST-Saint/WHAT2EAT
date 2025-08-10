@@ -129,7 +129,6 @@ const ReviewEditor = () => {
 		setDishes(allDishes);
 		setDishScores(allDishScores);
 		setDishComments(allDishComments);
-		console.log(dishes);
 	};
 
 	const onDishSelectChange = (
@@ -245,9 +244,6 @@ const ReviewEditor = () => {
 								popoverProps={{
 									shouldCloseOnScroll:
 										false,
-								}}
-								onClear={() => {
-									console.log('clear');
 								}}
 								onInputChange={(value) => {
 									onDishSelectChange(
